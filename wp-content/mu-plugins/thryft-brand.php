@@ -15,7 +15,7 @@ add_action('wp_enqueue_scripts', static function () {
 		array(),
 		null
 	);
-	wp_register_style('thryft-brand', false, array('thryft-fonts'), '1.0.0');
+	wp_register_style('thryft-brand', false, array('thryft-fonts'), '1.0.2');
 	wp_enqueue_style('thryft-brand');
 	wp_add_inline_style('thryft-brand', <<<'CSS'
 body.popularfx-body, .pagelayer-body, .pagelayer-body p, .pagelayer-body li {
@@ -72,7 +72,7 @@ footer a, .pagelayer-footer a {
 	width: 220px;
 	height: 52px;
 }
-.p-z0c8668 {
+.p-ztd8674 {
 	display: none !important;
 }
 .pagelayer-footer a[href*="facebook.com/sitepad"],
@@ -123,9 +123,13 @@ document.addEventListener('DOMContentLoaded',function(){
 		}
 	});
 	document.querySelectorAll('a[href*="contact@domain.com"]').forEach(function(a){
-		a.href='mailto:info@thryftadvisors.com';
-		a.textContent='info@thryftadvisors.com';
+		a.href='mailto:admin@thryftadvisors.com';
+		a.textContent='admin@thryftadvisors.com';
 	});
+	var dummyCol=document.querySelector('.pagelayer-footer .p-z0c8668 .pagelayer-col-holder');
+	if(dummyCol){
+		dummyCol.innerHTML='<h4 style="font-family:Poppins,sans-serif;margin:0 0 12px;">Atlanta</h4><p style="margin:0 0 8px;">3455 Peachtree Road NE<br>5th Floor<br>Atlanta, Georgia 30326</p><p style="margin:0;"><a href="mailto:admin@thryftadvisors.com">admin@thryftadvisors.com</a><br><a href="tel:888-316-6968">888-316-6968</a></p>';
+	}
 });
 JS
 	);
