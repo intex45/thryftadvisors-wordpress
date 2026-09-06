@@ -1,0 +1,11 @@
+.env
+*.sql
+*.sql.gz
+*.zip
+public_html/
+secrets/
+*.pem
+wp-config.php
+node_modules/
+.DS_Store
+Thumbs.db
