@@ -64,6 +64,21 @@ footer, .pagelayer-footer {
 footer a, .pagelayer-footer a {
 	color: #000 !important;
 }
+.pagelayer-header .pagelayer-wp-title-heading {
+	font-size: 0 !important;
+	color: transparent !important;
+	background: url('https://www.thryftadvisors.com/sites/default/files/logo.png') no-repeat left center;
+	background-size: contain;
+	width: 220px;
+	height: 52px;
+}
+.p-z0c8668 {
+	display: none !important;
+}
+.pagelayer-footer a[href*="facebook.com/sitepad"],
+.pagelayer-header a[href*="facebook.com/sitepad"] {
+	display: none !important;
+}
 .pagelayer-phone {
 	font-size: 0 !important;
 }
@@ -93,5 +108,25 @@ footer a, .pagelayer-footer a {
 }
 CSS
 	);
-	wp_add_inline_script('jquery', "document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href=\"tel:+1234567890\"]').forEach(function(a){a.href='tel:888-316-6968';});});");
+	wp_add_inline_script('jquery', <<<'JS'
+document.addEventListener('DOMContentLoaded',function(){
+	document.querySelectorAll('a[href="tel:+1234567890"]').forEach(function(a){a.href='tel:888-316-6968';});
+	var logoUrl='https://www.thryftadvisors.com/sites/default/files/logo.png';
+	document.querySelectorAll('.pagelayer-header .p-l9r55 a, .pagelayer-header .pagelayer-logo, .pagelayer-header .pagelayer-heading-holder a').forEach(function(a){
+		if(a.querySelector('img'))return;
+		a.innerHTML='<img src="'+logoUrl+'" alt="Thryft Advisors" style="max-height:52px;width:auto;">';
+	});
+	document.querySelectorAll('.pagelayer-footer a').forEach(function(a){
+		var t=(a.textContent||'').trim();
+		if(t==='Organizational Development'||t==='Strategic Planning'||t==='Performance Improvement'||t==='Change Management'||t==='Training and Development'){
+			a.closest('li')?a.closest('li').remove():a.remove();
+		}
+	});
+	document.querySelectorAll('a[href*="contact@domain.com"]').forEach(function(a){
+		a.href='mailto:info@thryftadvisors.com';
+		a.textContent='info@thryftadvisors.com';
+	});
+});
+JS
+	);
 }, 99);
