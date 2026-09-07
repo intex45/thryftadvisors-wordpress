@@ -45,7 +45,7 @@ This site is small (~31 URLs). Manual copy from the inventory plus backup HTML i
 
 - Every URL in `inventory/url-map.md`
 - Mobile header/footer
-- Quote form email delivery
+- [x] Quote form email delivery (`admin@thryftadvisors.com`)
 - Phone `tel:` links
 - Homepage counters/video embeds
 - SEO titles/canonicals on www after launch
