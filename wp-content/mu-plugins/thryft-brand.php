@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Thryft Advisors brand
- * Description: Drupal-matching fonts, teal #21cbba, logo, and phone on staging.
+ * Description: Drupal-matching fonts, teal #21cbba, and logo on staging.
  */
 
 if (!defined('ABSPATH')) {
@@ -15,7 +15,7 @@ add_action('wp_enqueue_scripts', static function () {
 		array(),
 		null
 	);
-	wp_register_style('thryft-brand', false, array('thryft-fonts'), '1.0.2');
+	wp_register_style('thryft-brand', false, array('thryft-fonts'), '1.0.4');
 	wp_enqueue_style('thryft-brand');
 	wp_add_inline_style('thryft-brand', <<<'CSS'
 body.popularfx-body, .pagelayer-body, .pagelayer-body p, .pagelayer-body li {
@@ -32,7 +32,8 @@ body.popularfx-body, .pagelayer-body, .site-content, .entry-content, #content, .
 	color: #000 !important;
 }
 .pagelayer-header .p-sy11564,
-.pagelayer-header .p-ufg3368 {
+.pagelayer-header .p-ufg3368,
+.pagelayer-header .p-fql9423 {
 	display: none !important;
 }
 .pagelayer-header {
@@ -40,7 +41,9 @@ body.popularfx-body, .pagelayer-body, .site-content, .entry-content, #content, .
 	box-shadow: 0 1px 4px rgba(0,0,0,.08);
 }
 .pagelayer-header .p-e8e2189,
-.pagelayer-header .p-e8e2189 .pagelayer-col-holder {
+.pagelayer-header .p-e8e2189 .pagelayer-col-holder,
+.pagelayer-header .p-twx5302,
+.pagelayer-header .p-twx5302 .pagelayer-col-holder {
 	background: #fff !important;
 }
 .pagelayer-header a {
@@ -72,25 +75,56 @@ footer a, .pagelayer-footer a {
 	width: 220px;
 	height: 52px;
 }
+.pagelayer-header .pagelayer-wp-title-link,
+.pagelayer-header .pagelayer-heading-holder {
+	max-width: 220px !important;
+	width: 220px !important;
+	display: block !important;
+}
+.pagelayer-header .pagelayer-wp_menu-ul {
+	display: flex !important;
+	flex-wrap: nowrap !important;
+	justify-content: flex-end;
+	align-items: center;
+	margin: 0 !important;
+	white-space: nowrap;
+}
+.pagelayer-header .pagelayer-wp_menu-ul > li {
+	float: none !important;
+	display: inline-block !important;
+}
+.pagelayer-header .pagelayer-wp_menu-ul > li > a {
+	font-size: 16px !important;
+	padding: 18px 10px !important;
+	white-space: nowrap !important;
+	line-height: 1.2 !important;
+}
+.pagelayer-header .pagelayer-wp_menu-ul > li:has(a[href*="/blog/"]),
+.pagelayer-header .pagelayer-wp_menu-ul > li:has(a[href*="terms-conditions"]),
+.pagelayer-header .pagelayer-wp_menu-ul > li:has(a[href*="privacy-policy"]) {
+	display: none !important;
+}
+.pagelayer-header .p-y3v7335,
+.pagelayer-header .p-pls7134 {
+	display: none !important;
+}
 .p-ztd8674 {
 	display: none !important;
 }
 .pagelayer-footer a[href*="facebook.com/sitepad"],
-.pagelayer-header a[href*="facebook.com/sitepad"] {
+.pagelayer-header a[href*="facebook.com/sitepad"],
+.pagelayer-header a[href*="twitter.com/sitepad"],
+.pagelayer-header a[href*="instagram.com/sitepad"],
+.pagelayer-header a[href*="linkedin.com/company/sitepad"] {
 	display: none !important;
 }
-.pagelayer-phone {
-	font-size: 0 !important;
+.pagelayer-phone,
+a[href^="tel:"],
+a[href*="888-316-6968"],
+a[href*="8883166968"] {
+	display: none !important;
 }
-.pagelayer-phone::after {
-	content: "888-316-6968";
-	font-size: 16px;
-	font-weight: 700;
-	font-family: Poppins, sans-serif;
-	color: #000;
-}
-.entry-content a[href*="contact-us"],
-.entry-content a[href^="tel:"] {
+.entry-content a[href*="contact-us"] {
 	display: inline-block;
 	background: #21cbba;
 	color: #fff !important;
@@ -101,8 +135,7 @@ footer a, .pagelayer-footer a {
 	font-weight: 800;
 	margin: 0 8px 8px 0;
 }
-.entry-content a[href*="contact-us"]:hover,
-.entry-content a[href^="tel:"]:hover {
+.entry-content a[href*="contact-us"]:hover {
 	background: transparent;
 	color: #21cbba !important;
 }
@@ -110,7 +143,7 @@ CSS
 	);
 	wp_add_inline_script('jquery', <<<'JS'
 document.addEventListener('DOMContentLoaded',function(){
-	document.querySelectorAll('a[href="tel:+1234567890"]').forEach(function(a){a.href='tel:888-316-6968';});
+	document.querySelectorAll('a[href^="tel:"], a[href*="888-316-6968"]').forEach(function(a){a.remove();});
 	var logoUrl='https://www.thryftadvisors.com/sites/default/files/logo.png';
 	document.querySelectorAll('.pagelayer-header .p-l9r55 a, .pagelayer-header .pagelayer-logo, .pagelayer-header .pagelayer-heading-holder a').forEach(function(a){
 		if(a.querySelector('img'))return;
@@ -128,9 +161,26 @@ document.addEventListener('DOMContentLoaded',function(){
 	});
 	var dummyCol=document.querySelector('.pagelayer-footer .p-z0c8668 .pagelayer-col-holder');
 	if(dummyCol){
-		dummyCol.innerHTML='<h4 style="font-family:Poppins,sans-serif;margin:0 0 12px;">Atlanta</h4><p style="margin:0 0 8px;">3455 Peachtree Road NE<br>5th Floor<br>Atlanta, Georgia 30326</p><p style="margin:0;"><a href="mailto:admin@thryftadvisors.com">admin@thryftadvisors.com</a><br><a href="tel:888-316-6968">888-316-6968</a></p>';
+		dummyCol.innerHTML='<h4 style="font-family:Poppins,sans-serif;margin:0 0 12px;">Atlanta</h4><p style="margin:0 0 8px;">3455 Peachtree Road NE<br>5th Floor<br>Atlanta, Georgia 30326</p><p style="margin:0;"><a href="mailto:admin@thryftadvisors.com">admin@thryftadvisors.com</a></p>';
 	}
 });
 JS
 	);
 }, 99);
+
+add_action('template_redirect', static function () {
+	if (is_admin() || wp_doing_ajax()) {
+		return;
+	}
+	$uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+	$path = rawurldecode((string) strtok($uri, '?'));
+	if (preg_match('#/privacy-policy-2/?$#', $path)) {
+		wp_safe_redirect(home_url('/privacy-policy/'), 301);
+		exit;
+	}
+	if (preg_match('#/services/expense-reduction/worker.s-comp-premium/?$#u', $path)
+		&& strpos($path, '/workers-comp-premium') === false) {
+		wp_safe_redirect(home_url('/services/expense-reduction/workers-comp-premium/'), 301);
+		exit;
+	}
+});
