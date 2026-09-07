@@ -15,7 +15,7 @@ add_action('wp_enqueue_scripts', static function () {
 		array(),
 		null
 	);
-	wp_register_style('thryft-brand', false, array('thryft-fonts'), '1.0.4');
+	wp_register_style('thryft-brand', false, array('thryft-fonts'), '1.0.5');
 	wp_enqueue_style('thryft-brand');
 	wp_add_inline_style('thryft-brand', <<<'CSS'
 body.popularfx-body, .pagelayer-body, .pagelayer-body p, .pagelayer-body li {
@@ -70,7 +70,7 @@ footer a, .pagelayer-footer a {
 .pagelayer-header .pagelayer-wp-title-heading {
 	font-size: 0 !important;
 	color: transparent !important;
-	background: url('https://www.thryftadvisors.com/sites/default/files/logo.png') no-repeat left center;
+	background: url('/wp-content/uploads/logo.png') no-repeat left center;
 	background-size: contain;
 	width: 220px;
 	height: 52px;
@@ -108,7 +108,15 @@ footer a, .pagelayer-footer a {
 .pagelayer-header .p-pls7134 {
 	display: none !important;
 }
-.p-ztd8674 {
+.p-ztd8674,
+.p-oca1429,
+.cookieadmin_law_container,
+.cookieadmin_cookie_modal,
+.cookieadmin-poweredby,
+.pagelayer-footer a[href*="/blog/"] {
+	display: none !important;
+}
+.pagelayer-footer .pagelayer-wp_menu-ul > li:has(a[href*="/blog/"]) {
 	display: none !important;
 }
 .pagelayer-footer a[href*="facebook.com/sitepad"],
@@ -144,7 +152,7 @@ CSS
 	wp_add_inline_script('jquery', <<<'JS'
 document.addEventListener('DOMContentLoaded',function(){
 	document.querySelectorAll('a[href^="tel:"], a[href*="888-316-6968"]').forEach(function(a){a.remove();});
-	var logoUrl='https://www.thryftadvisors.com/sites/default/files/logo.png';
+	var logoUrl='/wp-content/uploads/logo.png';
 	document.querySelectorAll('.pagelayer-header .p-l9r55 a, .pagelayer-header .pagelayer-logo, .pagelayer-header .pagelayer-heading-holder a').forEach(function(a){
 		if(a.querySelector('img'))return;
 		a.innerHTML='<img src="'+logoUrl+'" alt="Thryft Advisors" style="max-height:52px;width:auto;">';
@@ -168,17 +176,69 @@ JS
 	);
 }, 99);
 
+add_action('wp_head', static function () {
+	echo "<style id=\"thryft-brand-late\">.pagelayer-header .pagelayer-wp-title-heading{background-image:url('/wp-content/uploads/logo.png')!important}.cookieadmin_law_container,.cookieadmin_cookie_modal,.cookieadmin-poweredby,.cookieadmin_reconsent,.p-oca1429,.pagelayer-footer a[href*=\"/blog/\"]{display:none!important}</style>\n";
+}, 1000);
+
 add_action('template_redirect', static function () {
 	if (is_admin() || wp_doing_ajax()) {
 		return;
 	}
 	$uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
 	$path = rawurldecode((string) strtok($uri, '?'));
-	if (preg_match('#/privacy-policy-2/?$#', $path)) {
+	$path = '/' . trim($path, '/');
+	if ($path === '/') {
+		return;
+	}
+
+	$redirects = array(
+		'/contact' => '/contact-us/',
+		'/welcome-thryft-advisors' => '/',
+		'/news' => '/',
+		'/blog' => '/',
+		'/privacy-policy-2' => '/privacy-policy/',
+		'/node/5' => '/',
+		'/node/1' => '/about/',
+		'/node/2' => '/contact-us/',
+		'/node/3' => '/services/',
+		'/node/4' => '/faq/',
+		'/node/44' => '/terms-conditions/',
+		'/node/45' => '/privacy-policy/',
+		'/node/47' => '/think-you-cant-save-shipping-think-again/',
+		'/node/48' => '/savings-oh-so-annoying-accounts-payable/',
+		'/node/49' => '/cares-act-and-cost-segregation/',
+		'/node/50' => '/services/tax-incentives/workforce-hiring-incentive/',
+		'/node/51' => '/services/tax-incentives/r-d-tax-credit/',
+		'/node/52' => '/services/tax-incentives/property-tax-mitigation/',
+		'/node/53' => '/services/tax-incentives/cost-segregation/',
+		'/node/54' => '/services/tax-incentives/',
+		'/node/55' => '/services/specialized-savings/same-day-pay-employee-digital-wallet/',
+		'/node/56' => '/services/specialized-savings/',
+		'/node/57' => '/services/expense-reduction/',
+		'/node/58' => '/services/specialized-savings/gas-electric-bills/',
+		'/node/59' => '/services/specialized-savings/employee-health-benefits-billing-transparency/',
+		'/node/60' => '/services/specialized-savings/class-action-claims/',
+		'/node/61' => '/services/specialized-savings/accounts-payable-automation/',
+		'/node/62' => '/services/expense-reduction/zero-cost-card-processing/',
+		'/node/63' => '/services/expense-reduction/workers-comp-premium/',
+		'/node/64' => '/services/expense-reduction/wireless-bills/',
+		'/node/65' => '/services/expense-reduction/waste-recycle-bills/',
+		'/node/66' => '/services/expense-reduction/shipping-freight-platform/',
+		'/node/67' => '/services/expense-reduction/parcel-shipping-bills/',
+		'/node/68' => '/services/expense-reduction/credit-card-fees/',
+		'/node/69' => '/services/expense-reduction/copier-printer-charges/',
+	);
+
+	if (isset($redirects[$path])) {
+		wp_safe_redirect(home_url($redirects[$path]), 301);
+		exit;
+	}
+
+	if (preg_match('#^/privacy-policy-2$#', $path)) {
 		wp_safe_redirect(home_url('/privacy-policy/'), 301);
 		exit;
 	}
-	if (preg_match('#/services/expense-reduction/worker.s-comp-premium/?$#u', $path)
+	if (preg_match('#/services/expense-reduction/worker.s-comp-premium$#u', $path)
 		&& strpos($path, '/workers-comp-premium') === false) {
 		wp_safe_redirect(home_url('/services/expense-reduction/workers-comp-premium/'), 301);
 		exit;
