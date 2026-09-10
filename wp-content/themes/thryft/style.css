@@ -1,0 +1,12 @@
+/*
+Theme Name: Thryft Advisors
+Theme URI: https://www.thryftadvisors.com/
+Author: Thryft Advisors
+Description: Near-clone of the Drupal 7 thryft theme for WordPress. Reuses the live site fonts, teal #21cbba, header/footer, and service templates.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.8
+Text Domain: thryft
+*/
+
+/* Front-end CSS is enqueued from css/style.css and css/custom.css (Drupal sources). */
