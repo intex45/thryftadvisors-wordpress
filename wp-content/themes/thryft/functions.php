@@ -131,11 +131,11 @@ add_filter('page_link', static function ($link, $post_id) {
 }, 10, 2);
 
 add_action('template_redirect', static function () {
-	if (is_admin() || wp_doing_ajax() || !is_page()) {
+	if (is_admin() || wp_doing_ajax() || !is_page() || is_front_page()) {
 		return;
 	}
 	$path = get_post_meta(get_queried_object_id(), '_thryft_path', true);
-	if (!$path) {
+	if (!$path || $path === '/') {
 		return;
 	}
 	$req = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
