@@ -15,7 +15,7 @@ Near-clone of the live site [www.thryftadvisors.com](https://www.thryftadvisors.
 - [x] Custom theme that reuses Drupal CSS, images, header/footer, and service templates (`wp-content/themes/thryft`)
 - [x] Drupal URL redirects (`wp-content/mu-plugins/thryft-brand.php`)
 - [x] Activate the `thryft` theme on staging (pages/posts imported 2026-09-12; see [new.thryftadvisors.com](https://new.thryftadvisors.com/))
-- [ ] Confirm Contact Us mail via GoSMTP to `admin@thryftadvisors.com`
+- [x] Contact Us form on staging accepted a test quote (GoSMTP/`wp_mail` returned success to `admin@thryftadvisors.com`; confirm it arrived in that inbox)
 - [ ] Cutover (`www` still Drupal as of 2026-09-12; keep Drupal as `public_html_drupal` when switching)
 
 ## What this repo ships
