@@ -14,7 +14,7 @@ Near-clone of the live site [www.thryftadvisors.com](https://www.thryftadvisors.
 - [x] WordPress staging install (`new.thryftadvisors.com`)
 - [x] Custom theme that reuses Drupal CSS, images, header/footer, and service templates (`wp-content/themes/thryft`)
 - [x] Drupal URL redirects (`wp-content/mu-plugins/thryft-brand.php`)
-- [ ] Activate the `thryft` theme on staging (copies pages/posts on activation)
+- [x] Activate the `thryft` theme on staging (pages/posts imported 2026-09-12; see [new.thryftadvisors.com](https://new.thryftadvisors.com/))
 - [ ] Confirm Contact Us mail via GoSMTP to `admin@thryftadvisors.com`
 - [ ] Cutover (`www` still Drupal as of 2026-09-12; keep Drupal as `public_html_drupal` when switching)
 
