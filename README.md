@@ -16,27 +16,38 @@ Near-clone of the live site [www.thryftadvisors.com](https://www.thryftadvisors.
 - [x] Drupal URL redirects (`wp-content/mu-plugins/thryft-brand.php`)
 - [ ] Activate the `thryft` theme on staging (copies pages/posts on activation)
 - [ ] Confirm Contact Us mail via GoSMTP to `admin@thryftadvisors.com`
-- [ ] Cutover (`www` still Drupal as of 2026-09-10; keep Drupal as `public_html_drupal` when switching)
+- [ ] Cutover (`www` still Drupal as of 2026-09-12; keep Drupal as `public_html_drupal` when switching)
 
 ## What this repo ships
-
-Upload these paths into the WordPress install (document root `wp-content/`):
 
 | Path | Role |
 |---|---|
 | `wp-content/themes/thryft/` | Drupal near-clone theme. Activating it creates the pages, nested service URLs, news posts, and permalinks. |
-| `wp-content/mu-plugins/thryft-brand.php` | 301s for `/node/N`, `/contact`, `/blog`, and the Unicode workers-comp slug. Hides CookieAdmin chrome. |
+| `wp-content/plugins/thryft-redirects/` | 301s for `/node/N`, `/contact`, `/blog`, and the Unicode workers-comp slug. Upload this from WP Admin if you cannot write `mu-plugins`. |
+| `wp-content/mu-plugins/thryft-brand.php` | Same redirects, auto-loaded if you copy it via File Manager. Safe to use with or instead of the plugin. |
 
 Do **not** use the old PopularFX/PageLayer overlay. Staging is a stock WordPress 7.1 + Twenty Twenty-Five install; this theme replaces that look.
 
-### Staging activate
+### Staging activate (WP Admin, no FTP)
 
-1. Copy `wp-content/themes/thryft` and `wp-content/mu-plugins/thryft-brand.php` onto `new.thryftadvisors.com`.
-2. WP Admin → Appearance → Themes → **Activate Thryft Advisors**.
-3. Settings → Permalinks → save once (flush rewrites) if nested `/services/...` URLs 404.
-4. Send a test quote from `/contact-us/` (GoSMTP is already on staging).
+From the repo root: `bash tools/package-for-staging.sh` (writes `dist/thryft-theme.zip` and `dist/thryft-redirects.zip`).
 
-To refresh bundled copy after a later theme update: WP Admin → Appearance → **Re-import content**.
+1. Log into [new.thryftadvisors.com/wp-admin](https://new.thryftadvisors.com/wp-admin/).
+2. Appearance → Themes → Add New → Upload Theme → `thryft-theme.zip` → **Activate**.
+3. Plugins → Add New → Upload Plugin → `thryft-redirects.zip` → **Activate**.
+4. Settings → Permalinks → Save (flush rewrites if nested `/services/...` URLs 404).
+5. Send a test quote from `/contact-us/` (GoSMTP is already on staging).
+
+To refresh bundled copy after a later theme update: Appearance → **Re-import content**.
+
+### Local preview
+
+```bash
+bash .cursor/setup-wordpress.sh
+php -S 0.0.0.0:8080 -t public_html
+```
+
+Then open http://localhost:8080/ . Admin is `admin` / `admin` unless you override `THRYFT_ADMIN_*`.
 
 ## Do not put in this repo
 

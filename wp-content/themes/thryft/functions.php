@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-define('THRYFT_CONTENT_VERSION', 1);
+define('THRYFT_CONTENT_VERSION', 3);
 
 function thryft_uri($relative = '') {
 	return get_template_directory_uri() . '/' . ltrim($relative, '/');

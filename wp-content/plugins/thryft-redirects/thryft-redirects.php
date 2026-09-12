@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Thryft Advisors redirects
- * Description: Drupal URL 301s, cookie-banner hide, and workers-comp slug normalization for the Thryft theme.
+ * Description: Drupal URL 301s, cookie-banner hide, and workers-comp slug normalization for the Thryft theme. Same code as the must-use plugin; upload this if you do not have File Manager access to mu-plugins.
  * Version: 2.0.0
  */
 

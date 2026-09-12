@@ -7,13 +7,50 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-function thryft_find_page_by_slug($slug) {
-	$found = get_posts(array(
+function thryft_page_statuses() {
+	return array('publish', 'draft', 'pending', 'private', 'future');
+}
+
+function thryft_pages_named($slug) {
+	return get_posts(array(
 		'name' => $slug,
 		'post_type' => 'page',
-		'post_status' => 'any',
-		'numberposts' => 1,
+		'post_status' => thryft_page_statuses(),
+		'numberposts' => 20,
 	));
+}
+
+function thryft_claim_page_slug($slug) {
+	$candidates = array();
+	foreach (array($slug, $slug . '-2', $slug . '-3', $slug . '-4') as $try) {
+		$candidates = array_merge($candidates, thryft_pages_named($try));
+	}
+
+	$keep = 0;
+	foreach ($candidates as $page) {
+		if (get_post_meta($page->ID, '_thryft_path', true)) {
+			$keep = (int) $page->ID;
+		}
+	}
+
+	foreach ($candidates as $page) {
+		if ((int) $page->ID === $keep) {
+			continue;
+		}
+		wp_delete_post($page->ID, true);
+	}
+
+	if ($keep) {
+		wp_update_post(array(
+			'ID' => $keep,
+			'post_name' => $slug,
+			'post_status' => 'publish',
+		));
+	}
+}
+
+function thryft_find_page_by_slug($slug) {
+	$found = thryft_pages_named($slug);
 	return $found ? $found[0] : null;
 }
 
@@ -114,7 +151,11 @@ function thryft_import_content() {
 	thryft_upsert_page('Specialized Savings', 'specialized-savings', '', '/specialized-savings/');
 	thryft_upsert_page('Tax Incentives', 'tax-incentives', '', '/tax-incentives/');
 	thryft_upsert_page('Terms & Conditions', 'terms-conditions', '', '/terms-conditions/');
-	thryft_upsert_page('Privacy policy', 'privacy-policy', '', '/privacy-policy/');
+	thryft_claim_page_slug('privacy-policy');
+	$privacy_id = thryft_upsert_page('Privacy policy', 'privacy-policy', '', '/privacy-policy/');
+	if ($privacy_id) {
+		update_option('wp_page_for_privacy_policy', $privacy_id);
+	}
 
 	foreach (thryft_services() as $row) {
 		$content = '<div class="field field-name-field-video-link">' . $row['video'] . '</div>';
@@ -154,7 +195,7 @@ add_action('init', static function () {
 	if (get_template() !== 'thryft') {
 		return;
 	}
-	if (get_option('thryft_content_version')) {
+	if (get_option('thryft_content_version') === (string) THRYFT_CONTENT_VERSION) {
 		return;
 	}
 	thryft_import_content();
