@@ -1,11 +1,13 @@
 # Thryft Advisors — Drupal 7 → WordPress
 
-Near-clone of the live site [www.thryftadvisors.com](https://www.thryftadvisors.com/) onto **the same MochaHost account**, without taking Drupal down until cutover.
+Near-clone of the live site onto **the same MochaHost account**. Cutover completed **2026-09-13**.
 
-| Live today | Target |
+| Live now | Parked |
 |---|---|
-| Drupal 7 (EOL), theme `thryft`, Bootstrap 3 | WordPress (latest) + custom `thryft` theme |
-| LiteSpeed / MochaHost | Same host: staging at `new.thryftadvisors.com`, then document-root switch |
+| WordPress 7.1 + custom `thryft` theme at [www.thryftadvisors.com](https://www.thryftadvisors.com/) | Drupal 7 at `public_html_drupal` (keep ≥ 30 days) |
+| PHP 8.2 (account default) | Drupal’s old PHP 7.4 `AddHandler` stayed with the parked tree |
+
+Apex `thryftadvisors.com` and staging `new.thryftadvisors.com` 301 to `https://www.thryftadvisors.com/`.
 
 ## Status
 
@@ -14,9 +16,9 @@ Near-clone of the live site [www.thryftadvisors.com](https://www.thryftadvisors.
 - [x] WordPress staging install (`new.thryftadvisors.com`)
 - [x] Custom theme that reuses Drupal CSS, images, header/footer, and service templates (`wp-content/themes/thryft`)
 - [x] Drupal URL redirects (`wp-content/mu-plugins/thryft-brand.php`)
-- [x] Activate the `thryft` theme on staging (pages/posts imported 2026-09-12; see [new.thryftadvisors.com](https://new.thryftadvisors.com/))
+- [x] Activate the `thryft` theme (pages/posts imported 2026-09-12)
 - [x] Contact Us mail via GoSMTP to `admin@thryftadvisors.com` (staging test quote received 2026-09-12)
-- [ ] Cutover (`www` still Drupal as of 2026-09-12; keep Drupal as `public_html_drupal` when switching)
+- [x] Cutover 2026-09-13: `public_html` → WordPress symlink; Drupal parked as `public_html_drupal`
 
 ## What this repo ships
 
@@ -26,17 +28,17 @@ Near-clone of the live site [www.thryftadvisors.com](https://www.thryftadvisors.
 | `wp-content/plugins/thryft-redirects/` | 301s for `/node/N`, `/contact`, `/blog`, and the Unicode workers-comp slug. Upload this from WP Admin if you cannot write `mu-plugins`. |
 | `wp-content/mu-plugins/thryft-brand.php` | Same redirects, auto-loaded if you copy it via File Manager. Safe to use with or instead of the plugin. |
 
-Do **not** use the old PopularFX/PageLayer overlay. Staging is a stock WordPress 7.1 + Twenty Twenty-Five install; this theme replaces that look.
+Do **not** use the old PopularFX/PageLayer overlay. Live is WordPress 7.1 + this theme.
 
-### Staging activate (WP Admin, no FTP)
+### Staging / local activate (WP Admin)
 
 From the repo root: `bash tools/package-for-staging.sh` (writes `dist/thryft-theme.zip` and `dist/thryft-redirects.zip`).
 
-1. Log into [new.thryftadvisors.com/wp-admin](https://new.thryftadvisors.com/wp-admin/).
+1. Log into [www.thryftadvisors.com/wp-admin](https://www.thryftadvisors.com/wp-admin/) (or a local install).
 2. Appearance → Themes → Add New → Upload Theme → `thryft-theme.zip` → **Activate**.
 3. Plugins → Add New → Upload Plugin → `thryft-redirects.zip` → **Activate**.
 4. Settings → Permalinks → Save (flush rewrites if nested `/services/...` URLs 404).
-5. Send a test quote from `/contact-us/` (GoSMTP is already on staging).
+5. Send a test quote from `/contact-us/` (GoSMTP is already configured).
 
 To refresh bundled copy after a later theme update: Appearance → **Re-import content**.
 
@@ -49,10 +51,27 @@ php -S 0.0.0.0:8080 -t public_html
 
 Then open http://localhost:8080/ . Admin is `admin` / `admin` unless you override `THRYFT_ADMIN_*`.
 
+## Cutover notes (hosting)
+
+Executed on the MochaHost account (`thryftad`):
+
+1. WP DB dump at `/home/thryftad/tmp/wp-pre-cutover-2026-09-13.sql`.
+2. `mv public_html public_html_drupal` (Drupal 7 intact).
+3. `ln -s new.thryftadvisors.com public_html` (`www` → `public_html` still valid).
+4. `home` / `siteurl` set to `https://www.thryftadvisors.com`; search-replace `new.` → `www.`.
+5. `.htaccess` 301s `new.thryftadvisors.com` to www.
+
+### Rollback (SSH as `thryftad`)
+
+```bash
+rm /home/thryftad/public_html   # only if it is the WordPress symlink
+mv /home/thryftad/public_html_drupal /home/thryftad/public_html
+# restore WP URLs if needed:
+# wp --skip-packages db import /home/thryftad/tmp/wp-pre-cutover-2026-09-13.sql
+```
+
+Do **not** delete `public_html_drupal` for at least 30 days. Do **not** force live WordPress back onto PHP 7.4.
+
 ## Do not put in this repo
 
 cPanel passwords, Drupal admin logins, database dumps with PII, or `.env` files.
-
-## Next
-
-Keep Drupal at [www.thryftadvisors.com](https://www.thryftadvisors.com/) until staging looks right. After cutover, keep `public_html_drupal` and the account backup for at least 30 days. Leave PHP at 7.4 until Drupal is retired, then raise it for WordPress.
