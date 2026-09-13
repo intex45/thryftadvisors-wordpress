@@ -24,7 +24,8 @@ https://thryftadvisors.com/,https://www.thryftadvisors.com/,301
 /node/60,/services/specialized-savings/class-action-claims,301
 /node/61,/services/specialized-savings/accounts-payable-automation,301
 /node/62,/services/expense-reduction/zero-cost-card-processing,301
-/node/63,/services/expense-reduction/worker’s-comp-premium,301
+/node/63,/services/expense-reduction/workers-comp-premium,301
+/services/expense-reduction/worker’s-comp-premium,/services/expense-reduction/workers-comp-premium,301
 /node/64,/services/expense-reduction/wireless-bills,301
 /node/65,/services/expense-reduction/waste-recycle-bills,301
 /node/66,/services/expense-reduction/shipping-freight-platform,301

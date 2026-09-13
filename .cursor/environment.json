@@ -1,0 +1,21 @@
+{
+  "name": "Thryft Advisors WordPress",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "user": "ubuntu",
+  "install": "bash .cursor/setup-wordpress.sh",
+  "terminals": [
+    {
+      "name": "wp-server",
+      "command": "php -S 0.0.0.0:8080 -t public_html"
+    }
+  ],
+  "ports": [
+    {
+      "name": "wordpress",
+      "port": 8080
+    }
+  ]
+}
