@@ -275,7 +275,7 @@ function thryft_services_hub_html() {
 			}
 			$row = $by_slug[$slug];
 			$url = home_url($row['path']);
-			$teaser = wp_html_excerpt(wp_strip_all_tags($row['teaser']), 140, '…');
+			$teaser = wp_trim_words(wp_strip_all_tags($row['teaser']), 22, '…');
 			$html .= '<div class="col-md-4 col-sm-6 col-xs-12">';
 			$html .= '<div class="thryft-hub-card">';
 			$html .= '<h3><a href="' . esc_url($url) . '">' . esc_html($row['title']) . '</a></h3>';
