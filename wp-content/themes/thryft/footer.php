@@ -47,8 +47,9 @@
 		<div class="container">
 			<div class="region region-footer-bottom">
 				<section id="block-block-8" class="block block-block clearfix">
-					<p><a href="<?php echo esc_url(home_url('/terms-conditions/')); ?>">Terms &amp; Conditions</a>&nbsp;&nbsp; |&nbsp;&nbsp; <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a></p>
-					<p>2020 © Thryft Advisor commercial. All right reserved. </p>
+					<p><a href="<?php echo esc_url(home_url('/terms-conditions/')); ?>">Terms &amp; Conditions</a>&nbsp;&nbsp; |&nbsp;&nbsp; <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>&nbsp;&nbsp; |&nbsp;&nbsp; <a href="<?php echo esc_url(home_url('/how-we-make-money/')); ?>">How we make money</a></p>
+					<?php echo thryft_disclosure_paragraph(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<p>2026 © Thryft Advisors. All rights reserved.</p>
 				</section>
 			</div>
 		</div>

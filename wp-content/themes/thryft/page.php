@@ -12,6 +12,7 @@ $home = home_url('/');
 $is_contact = ($slug === 'contact-us');
 $is_about = ($slug === 'about');
 $is_faq = ($slug === 'faq');
+$is_services_hub = ($slug === 'services');
 $categories = array('expense-reduction' => 'Expense Reduction', 'specialized-savings' => 'Specialized Savings', 'tax-incentives' => 'Tax Incentives');
 $is_category = isset($categories[$slug]);
 $service = thryft_service_by_slug($slug);
@@ -87,6 +88,10 @@ thryft_titlebar($is_faq ? 'FAQ' : $title, $crumbs, $show_quote);
 							<div class="block-body">
 								<p>As owners and managers of businesses, we believe you should be empowered to make the right decisions to ensure longevity of your organization. Feel free to contact us with any questions or concerns you have and we'll make it right by you.</p>
 							</div>
+						</section>
+					<?php elseif ($is_services_hub) : ?>
+						<section id="block-thryft-services-hub" class="block block-thryft clearfix">
+							<?php echo thryft_services_hub_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</section>
 					<?php elseif ($is_category) : ?>
 						<section id="block-views-our-services-block-2" class="block block-views clearfix">

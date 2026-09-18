@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Thryft Advisors redirects
- * Description: Drupal URL 301s, cookie-banner hide, and workers-comp slug normalization for the Thryft theme. Same code as the must-use plugin; upload this if you do not have File Manager access to mu-plugins.
- * Version: 2.0.0
+ * Description: Drupal URL 301s, CookieAdmin powered-by hide, workers-comp slug normalization, and /go/ cloaking fallback. Same code as the must-use plugin; upload this if you do not have File Manager access to mu-plugins.
+ * Version: 2.1.0
  */
 
 if (!defined('ABSPATH')) {
@@ -14,7 +14,7 @@ if (defined('THRYFT_REDIRECTS_LOADED')) {
 define('THRYFT_REDIRECTS_LOADED', true);
 
 add_action('wp_head', static function () {
-	echo '<style id="thryft-chrome">.cookieadmin_law_container,.cookieadmin_cookie_modal,.cookieadmin-poweredby,.cookieadmin_reconsent{display:none!important}</style>' . "\n";
+	echo '<style id="thryft-chrome">.cookieadmin-poweredby{display:none!important}</style>' . "\n";
 }, 1000);
 
 add_action('template_redirect', static function () {
@@ -24,6 +24,12 @@ add_action('template_redirect', static function () {
 	$uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
 	$path = rawurldecode((string) strtok($uri, '?'));
 	$path = '/' . trim($path, '/');
+	if (preg_match('#^/go/([a-z0-9-]+)$#', $path, $go_match)) {
+		if (function_exists('thryft_handle_go_slug')) {
+			thryft_handle_go_slug($go_match[1]);
+		}
+		return;
+	}
 	if ($path === '/') {
 		return;
 	}

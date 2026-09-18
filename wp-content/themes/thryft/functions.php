@@ -7,7 +7,8 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-define('THRYFT_CONTENT_VERSION', 3);
+define('THRYFT_CONTENT_VERSION', 4);
+define('THRYFT_AFFILIATE_SLICE', 1);
 
 function thryft_uri($relative = '') {
 	return get_template_directory_uri() . '/' . ltrim($relative, '/');
@@ -41,7 +42,9 @@ function thryft_service_by_slug($slug) {
 }
 
 require_once get_template_directory() . '/inc/forms.php';
+require_once get_template_directory() . '/inc/affiliates.php';
 require_once get_template_directory() . '/inc/setup.php';
+require_once get_template_directory() . '/inc/tracking.php';
 
 add_action('after_setup_theme', static function () {
 	add_theme_support('title-tag');
@@ -63,10 +66,10 @@ add_action('wp_enqueue_scripts', static function () {
 	);
 	wp_enqueue_style('thryft-style', thryft_uri('css/style.css'), array('thryft-bootstrap', 'thryft-fonts'), '1.0.0');
 	wp_enqueue_style('thryft-custom', thryft_uri('css/custom.css'), array('thryft-style'), '1.0.0');
-	wp_enqueue_style('thryft-wp', thryft_uri('css/wp.css'), array('thryft-custom'), '1.0.0');
+	wp_enqueue_style('thryft-wp', thryft_uri('css/wp.css'), array('thryft-custom'), '1.2.0');
 
 	wp_enqueue_script('thryft-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js', array('jquery'), '3.4.1', true);
-	wp_enqueue_script('thryft-script', thryft_uri('js/script.js'), array('jquery'), '1.0.0', true);
+	wp_enqueue_script('thryft-script', thryft_uri('js/script.js'), array('jquery'), '1.0.1', true);
 }, 20);
 
 add_filter('document_title_parts', static function ($parts) {
@@ -80,22 +83,6 @@ add_filter('document_title_parts', static function ($parts) {
 add_action('wp_head', static function () {
 	$icon = thryft_uri('files/fevicon.png');
 	echo '<link rel="shortcut icon" href="' . esc_url($icon) . '" type="image/png" />' . "\n";
-	?>
-<!-- Facebook Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!n.queue)n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '157263089504378');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=157263089504378&ev=PageView&noscript=1"/></noscript>
-<!-- End Facebook Pixel Code -->
-	<?php
 }, 5);
 
 add_filter('body_class', static function ($classes) {
@@ -227,6 +214,80 @@ function thryft_service_listing($category) {
 		<?php
 	}
 	echo '</div></div>';
+}
+
+function thryft_service_hub_groups() {
+	return array(
+		array(
+			'key' => 'recurring',
+			'title' => 'Recurring bills',
+			'intro' => 'Monthly costs you can compare and, when a partner is under contract, apply through a disclosed referral. Messy files still go to an advisor.',
+			'slugs' => array(
+				'credit-card-fees',
+				'zero-cost-card-processing',
+				'parcel-shipping-bills',
+				'shipping-freight-platform',
+				'wireless-bills',
+				'waste-recycle-bills',
+				'gas-electric-bills',
+				'copier-printer-charges',
+				'workers-comp-premium',
+				'accounts-payable-automation',
+			),
+		),
+		array(
+			'key' => 'one-time',
+			'title' => 'One-time recoveries',
+			'intro' => 'Project work — tax studies, hiring credits, settlements, and similar recoveries. These stay with the advisor team. They are not a click-out campaign.',
+			'slugs' => array(
+				'cost-segregation',
+				'r-d-tax-credit',
+				'workforce-hiring-incentive',
+				'property-tax-mitigation',
+				'class-action-claims',
+				'same-day-pay-employee-digital-wallet',
+				'employee-health-benefits-billing-transparency',
+			),
+		),
+	);
+}
+
+function thryft_services_hub_html() {
+	$by_slug = array();
+	foreach (thryft_services() as $row) {
+		$by_slug[$row['slug']] = $row;
+	}
+
+	$html = '<div class="thryft-services-hub">';
+	$html .= '<div class="thryft-hub-intro">';
+	$html .= '<h2>Ways we help you spend less</h2>';
+	$html .= '<p>Seventeen offers, grouped the way the work actually happens. Recurring bills can go through a disclosed partner when one is under contract, or an advisor when the file is messy. One-time recoveries stay with the advisor team.</p>';
+	$html .= '</div>';
+
+	foreach (thryft_service_hub_groups() as $group) {
+		$html .= '<div class="thryft-hub-group thryft-hub-group-' . esc_attr($group['key']) . '">';
+		$html .= '<h2>' . esc_html($group['title']) . '</h2>';
+		$html .= '<p class="thryft-hub-group-intro">' . esc_html($group['intro']) . '</p>';
+		$html .= '<div class="row">';
+		foreach ($group['slugs'] as $slug) {
+			if (empty($by_slug[$slug])) {
+				continue;
+			}
+			$row = $by_slug[$slug];
+			$url = home_url($row['path']);
+			$teaser = wp_trim_words(wp_strip_all_tags($row['teaser']), 22, '…');
+			$html .= '<div class="col-md-4 col-sm-6 col-xs-12">';
+			$html .= '<div class="thryft-hub-card">';
+			$html .= '<h3><a href="' . esc_url($url) . '">' . esc_html($row['title']) . '</a></h3>';
+			$html .= '<p>' . esc_html($teaser) . '</p>';
+			$html .= '<div class="btn-wrap"><div class="btn-sevices viewnode"><a href="' . esc_url($url) . '">Read More</a></div></div>';
+			$html .= '</div></div>';
+		}
+		$html .= '</div></div>';
+	}
+
+	$html .= '</div>';
+	return $html;
 }
 
 function thryft_footer_service_links($category) {

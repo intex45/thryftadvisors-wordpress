@@ -57,11 +57,37 @@ body.admin-bar .navbar-default {
 	}
 }
 
-.cookieadmin_law_container,
-.cookieadmin_cookie_modal,
-.cookieadmin-poweredby,
-.cookieadmin_reconsent {
+.thryft-form-note {
+	background: #f4fffd;
+	border: 1px solid #21cbba;
+	padding: 12px 16px;
+	margin-bottom: 18px;
+}
+
+.thryft-disclosure {
+	font-size: 13px;
+	line-height: 1.5;
+	color: #444;
+	margin: 12px 0;
+}
+.footerbuttom .thryft-disclosure {
+	max-width: 820px;
+}
+.thryft-offer-cta {
+	margin: 28px 0 10px;
+	padding: 18px 20px;
+	border: 1px solid #d7efeb;
+	background: #f8fffe;
+}
+.thryft-offer-cta .btn-wrap {
+	margin-top: 8px;
+}
+
+.cookieadmin-poweredby {
 	display: none !important;
+}
+.cookieadmin_law_container {
+	z-index: 100000;
 }
 
 .element-invisible {
@@ -79,4 +105,46 @@ body.admin-bar .navbar-default {
 
 .googlemap iframe {
 	display: block;
+}
+
+.thryft-services-hub h2 {
+	color: #000;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 32px;
+	margin: 8px 0 16px;
+}
+.thryft-hub-intro {
+	margin-bottom: 28px;
+}
+.thryft-hub-group {
+	margin-bottom: 36px;
+}
+.thryft-hub-group-intro {
+	margin-bottom: 18px;
+}
+.thryft-hub-card {
+	background: #e5e5e5;
+	border-radius: 8px;
+	padding: 24px 18px 18px;
+	margin: 0 auto 24px;
+	min-height: 230px;
+}
+.thryft-hub-card h3 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 18px;
+	text-transform: uppercase;
+	margin: 0 0 12px;
+}
+.thryft-hub-card h3 a {
+	color: #000;
+	text-decoration: none;
+}
+.thryft-hub-card h3 a:hover {
+	color: #21cbba;
+}
+.thryft-hub-card p {
+	font-size: 15px;
+	margin-bottom: 12px;
 }
