@@ -106,3 +106,45 @@ body.admin-bar .navbar-default {
 .googlemap iframe {
 	display: block;
 }
+
+.thryft-services-hub h2 {
+	color: #000;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 32px;
+	margin: 8px 0 16px;
+}
+.thryft-hub-intro {
+	margin-bottom: 28px;
+}
+.thryft-hub-group {
+	margin-bottom: 36px;
+}
+.thryft-hub-group-intro {
+	margin-bottom: 18px;
+}
+.thryft-hub-card {
+	background: #e5e5e5;
+	border-radius: 8px;
+	padding: 24px 18px 18px;
+	margin: 0 auto 24px;
+	min-height: 230px;
+}
+.thryft-hub-card h3 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 18px;
+	text-transform: uppercase;
+	margin: 0 0 12px;
+}
+.thryft-hub-card h3 a {
+	color: #000;
+	text-decoration: none;
+}
+.thryft-hub-card h3 a:hover {
+	color: #21cbba;
+}
+.thryft-hub-card p {
+	font-size: 15px;
+	margin-bottom: 12px;
+}

@@ -70,8 +70,8 @@ $steps = array(
 							<img class="imageblock-image img-responsive" src="<?php echo esc_url($files . '/imageblock/AdobeStock_300167426.jpg'); ?>" alt="" />
 						</div>
 						<div class="block-body">
-							<h2>Your Business Cannot Afford To Be Stagnate</h2>
-							<p>Technology and innovation is progressing at a rapid pace, challenging normal business practices. Due to COVID, this speed is increasing further. We have the experience and expterise to help guide you and your business through these challenging times.</p>
+							<h2>Your Business Cannot Afford To Stand Still</h2>
+							<p>We help businesses spend less on the bills that never stop — and recover cash on the projects that should pay you back. Recurring costs can go to a disclosed partner when one is a fit; complex files still go through an advisor.</p>
 							<p><a class="requestaquote bluebtn" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Request a quote</a></p>
 						</div>
 					</section>

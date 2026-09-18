@@ -148,7 +148,7 @@ function thryft_import_content() {
 	$home_id = thryft_upsert_page('Welcome to THRYFT ADVISORS', 'welcome-thryft-advisors', '', '/');
 	thryft_upsert_page('About', 'about', $about_body, '/about/');
 	thryft_upsert_page('Contact Us', 'contact-us', '', '/contact-us/');
-	thryft_upsert_page('Services', 'services', '', '/services/');
+	thryft_upsert_page('Services', 'services', thryft_services_hub_html(), '/services/');
 	thryft_upsert_page('FAQ', 'faq', thryft_faq_html(), '/faq/');
 	thryft_upsert_page('Expense Reduction', 'expense-reduction', '', '/expense-reduction/');
 	thryft_upsert_page('Specialized Savings', 'specialized-savings', '', '/specialized-savings/');
