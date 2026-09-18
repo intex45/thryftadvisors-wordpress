@@ -55,6 +55,9 @@ add_action('template_redirect', static function () {
 });
 
 function thryft_form_feedback() {
+	if (!empty($_GET['from']) && strpos(sanitize_text_field(wp_unslash($_GET['from'])), 'go-') === 0) {
+		echo '<div class="thryft-form-note">Tell us about the cost area you want help with. An advisor will follow up and can introduce a partner when one is a fit. Partner referrals may be compensated — that is advertising.</div>';
+	}
 	if (empty($_GET['contact'])) {
 		return;
 	}

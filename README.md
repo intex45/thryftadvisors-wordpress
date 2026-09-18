@@ -30,6 +30,22 @@ Apex `thryftadvisors.com` and staging `new.thryftadvisors.com` 301 to `https://w
 
 Do **not** use the old PopularFX/PageLayer overlay. Live is WordPress 7.1 + this theme.
 
+## Affiliate Phase 1 (payments + shipping pilot)
+
+Ships in the theme (no Pretty Links plugin). After uploading the new theme zip on www:
+
+1. Appearance → Themes → **Re-import content** (or wait for the next page load; slice import runs on `init` when `thryft_affiliate_slice` is behind).
+2. Confirm `/privacy-policy/`, `/terms-conditions/`, and `/how-we-make-money/` have body copy.
+3. CookieAdmin: stop hiding the banner (this theme version no longer CSS-hides it). Map Facebook Pixel `157263089504378` to **Advertisement** and future GA4 cookies to **Analytical**. Cookie lists in the plugin still say “None” until you add them in wp-admin.
+4. Settings → General → **Thryft GA4 measurement ID** — leave blank until you have a real `G-` ID. Do not invent one.
+5. Settings → General → **Go link** fields — paste partner URLs only after a program is approved. Blank `/go/credit-card-fees/`, `/go/zero-cost-processing/`, and `/go/shipping/` send visitors to the advisor form.
+6. SpeedyCache: exclude `/go/` and the thank-you query `?contact=sent`.
+7. SiteSEO: titles/descriptions are written to `_siteseo_titles_*` on the three offer URLs plus legal pages. Confirm Organization name is “Thryft Advisors” under SiteSEO → Social.
+
+**Partner applications (not in git):** apply to one merchant-services program and one shipping program. Prag still needs to provide legal entity, tax ID, and payable email. Do not treat SHIPSTORE / ZCP / Paysystems / Instant Pay as contracted or exclusive.
+
+Do **not** merge this slice to `main` unless you are also merging the live `thryft` theme (open PR #3). `main` may still be the abandoned PopularFX overlay.
+
 ### Staging / local activate (WP Admin)
 
 From the repo root: `bash tools/package-for-staging.sh` (writes `dist/thryft-theme.zip` and `dist/thryft-redirects.zip`).

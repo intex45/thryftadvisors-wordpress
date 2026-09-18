@@ -57,11 +57,37 @@ body.admin-bar .navbar-default {
 	}
 }
 
-.cookieadmin_law_container,
-.cookieadmin_cookie_modal,
-.cookieadmin-poweredby,
-.cookieadmin_reconsent {
+.thryft-form-note {
+	background: #f4fffd;
+	border: 1px solid #21cbba;
+	padding: 12px 16px;
+	margin-bottom: 18px;
+}
+
+.thryft-disclosure {
+	font-size: 13px;
+	line-height: 1.5;
+	color: #444;
+	margin: 12px 0;
+}
+.footerbuttom .thryft-disclosure {
+	max-width: 820px;
+}
+.thryft-offer-cta {
+	margin: 28px 0 10px;
+	padding: 18px 20px;
+	border: 1px solid #d7efeb;
+	background: #f8fffe;
+}
+.thryft-offer-cta .btn-wrap {
+	margin-top: 8px;
+}
+
+.cookieadmin-poweredby {
 	display: none !important;
+}
+.cookieadmin_law_container {
+	z-index: 100000;
 }
 
 .element-invisible {

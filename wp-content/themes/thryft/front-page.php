@@ -89,15 +89,7 @@ $steps = array(
 			</div>
 			<div class="block-body">
 				<h2>Our Results</h2>
-				<p>With over 20 years of cost reduction and tax analysis experience, our team of Engineers, IP Attorneys, Tax Consultants, and Service Specialists can determine quickly and accurately how to increase your cash flow and reduce expenses.</p>
-			</div>
-		</section>
-		<section id="block-block-4" class="block block-block clearfix">
-			<div class="row">
-				<div class="col-md-3 col-sm-6 col-xs-12"><div class="count count-1"><h4>60</h4><p>Our team consists of professionals with experience in over 60 industries.</p></div></div>
-				<div class="col-md-3 col-sm-6 col-xs-12"><div class="count count-2"><h4>42</h4><p>Our business consultants have experience serving clients in 42 industries.</p></div></div>
-				<div class="col-md-3 col-sm-6 col-xs-12"><div class="count count-3"><h4>5000</h4><p>Our team has served over 5,000+ businesses.</p></div></div>
-				<div class="col-md-3 col-sm-6 col-xs-12"><div class="count count-4"><h4>2</h4><p>Our cost saving solutions have helped our clients reclaim over $2.7bln</p></div></div>
+				<p>We help US businesses find waste in recurring bills and recover cash on the projects that should pay you back. Talk to an advisor for complex files, or use the disclosed partner path on card-acceptance and shipping pages.</p>
 			</div>
 		</section>
 	</div>
