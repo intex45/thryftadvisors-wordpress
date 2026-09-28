@@ -7,8 +7,9 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-define('THRYFT_CONTENT_VERSION', 4);
+define('THRYFT_CONTENT_VERSION', 5);
 define('THRYFT_AFFILIATE_SLICE', 1);
+define('THRYFT_DUAL_PILLAR_SLICE', 1);
 
 function thryft_uri($relative = '') {
 	return get_template_directory_uri() . '/' . ltrim($relative, '/');
@@ -66,7 +67,7 @@ add_action('wp_enqueue_scripts', static function () {
 	);
 	wp_enqueue_style('thryft-style', thryft_uri('css/style.css'), array('thryft-bootstrap', 'thryft-fonts'), '1.0.0');
 	wp_enqueue_style('thryft-custom', thryft_uri('css/custom.css'), array('thryft-style'), '1.0.0');
-	wp_enqueue_style('thryft-wp', thryft_uri('css/wp.css'), array('thryft-custom'), '1.2.0');
+	wp_enqueue_style('thryft-wp', thryft_uri('css/wp.css'), array('thryft-custom'), '1.3.0');
 
 	wp_enqueue_script('thryft-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js', array('jquery'), '3.4.1', true);
 	wp_enqueue_script('thryft-script', thryft_uri('js/script.js'), array('jquery'), '1.0.1', true);
@@ -74,7 +75,7 @@ add_action('wp_enqueue_scripts', static function () {
 
 add_filter('document_title_parts', static function ($parts) {
 	if (is_front_page()) {
-		$parts['title'] = 'Welcome to THRYFT ADVISORS';
+		$parts['title'] = 'Thryft Advisors — Cost savings and AI workflows';
 		$parts['site'] = 'Thryft Advisors';
 	}
 	return $parts;
@@ -107,6 +108,11 @@ add_action('init', static function () {
 		'index.php?pagename=$matches[2]',
 		'top'
 	);
+	add_rewrite_rule(
+		'^ai/(scan|pilot|embedding)/?$',
+		'index.php?pagename=$matches[1]',
+		'top'
+	);
 }, 5);
 
 add_filter('page_link', static function ($link, $post_id) {
@@ -130,7 +136,8 @@ add_action('template_redirect', static function () {
 	$want = user_trailingslashit($path);
 	if ($req_path !== $want && $req_path !== untrailingslashit($want) . '/') {
 		// Allow the nested Drupal path through; bounce the short slug URL.
-		if (!preg_match('#^/services/(expense-reduction|specialized-savings|tax-incentives)/#', $req_path)) {
+		if (!preg_match('#^/services/(expense-reduction|specialized-savings|tax-incentives)/#', $req_path)
+			&& !preg_match('#^/ai/(scan|pilot|embedding)/#', $req_path)) {
 			wp_safe_redirect(home_url($want), 301);
 			exit;
 		}
@@ -173,7 +180,7 @@ function thryft_titlebar($title, $crumbs = array(), $show_quote = true) {
 					<?php endforeach; ?>
 				</ol>
 				<?php if ($show_quote) : ?>
-				<div class="getquote"><a href="<?php echo esc_url(home_url('/contact-us/')); ?>">Request a quote</a></div>
+				<div class="getquote"><a href="<?php echo esc_url(home_url('/save/')); ?>">See ways to save</a></div>
 				<?php endif; ?>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-4"></div>
@@ -205,7 +212,7 @@ function thryft_service_listing($category) {
 						<div class="short-content"><?php echo esc_html($row['teaser']); ?></div>
 						<div class="btn-wrap">
 							<div class="btn-sevices viewnode"><a href="<?php echo esc_url($url); ?>">Read More</a></div>
-							<div class="btn-sevices appointment"><a href="<?php echo esc_url(home_url('/contact-us/')); ?>">Schedule an appointment</a></div>
+							<div class="btn-sevices appointment"><a href="<?php echo esc_url(add_query_arg('intent', 'savings', home_url('/contact-us/'))); ?>">Schedule an appointment</a></div>
 						</div>
 					</div>
 				</div>
@@ -252,16 +259,31 @@ function thryft_service_hub_groups() {
 	);
 }
 
-function thryft_services_hub_html() {
+function thryft_ai_packages() {
+	return thryft_content()['ai_packages'] ?? array();
+}
+
+function thryft_ai_package_by_slug($slug) {
+	foreach (thryft_ai_packages() as $row) {
+		if ($row['slug'] === $slug) {
+			return $row;
+		}
+	}
+	return null;
+}
+
+function thryft_save_hub_html() {
 	$by_slug = array();
 	foreach (thryft_services() as $row) {
 		$by_slug[$row['slug']] = $row;
 	}
 
-	$html = '<div class="thryft-services-hub">';
+	$html = '<div class="thryft-services-hub thryft-save-hub">';
 	$html .= '<div class="thryft-hub-intro">';
-	$html .= '<h2>Ways we help you spend less</h2>';
-	$html .= '<p>Seventeen offers, grouped the way the work actually happens. Recurring bills can go through a disclosed partner when one is under contract, or an advisor when the file is messy. One-time recoveries stay with the advisor team.</p>';
+	$html .= '<h2>Ways to save</h2>';
+	$html .= '<p>Recurring bills can go through a disclosed partner when one is under contract, or an advisor when the file is messy. One-time recoveries stay with the advisor team. Nested offer URLs under <code>/services/</code> still work; this hub is the front door.</p>';
+	$html .= '<p><a class="requestaquote bluebtn" href="' . esc_url(add_query_arg('intent', 'savings', home_url('/contact-us/'))) . '">Talk to an advisor</a> ';
+	$html .= '<a class="thryft-text-link" href="' . esc_url(home_url('/how-we-make-money/')) . '">How we get paid</a></p>';
 	$html .= '</div>';
 
 	foreach (thryft_service_hub_groups() as $group) {
@@ -287,6 +309,55 @@ function thryft_services_hub_html() {
 	}
 
 	$html .= '</div>';
+	return $html;
+}
+
+/** @deprecated Alias — Save hub replaced the bare /services/ landing. */
+function thryft_services_hub_html() {
+	return thryft_save_hub_html();
+}
+
+function thryft_ai_hub_html() {
+	$html = '<div class="thryft-ai-hub">';
+	$html .= '<div class="thryft-hub-intro">';
+	$html .= '<h2>AI for real SMB workflows</h2>';
+	$html .= '<p>Thryft Advisors packages AI advisory around operations work — intake, support, admin, quoting, scheduling, reporting — not a chatbot landing page. Three packages: Scan, Pilot, and Embedding. <strong>No public prices</strong>; CTA is always talk to us / book a consult.</p>';
+	$html .= '<p><a class="requestaquote bluebtn" href="' . esc_url(add_query_arg('intent', 'ai', home_url('/contact-us/'))) . '">Book an AI consult</a> ';
+	$html .= '<a class="thryft-text-link" href="' . esc_url(home_url('/save/')) . '">Prefer cost savings?</a></p>';
+	$html .= '</div>';
+	$html .= '<div class="row">';
+	foreach (thryft_ai_packages() as $row) {
+		$url = home_url($row['path']);
+		$html .= '<div class="col-md-4 col-sm-6 col-xs-12">';
+		$html .= '<div class="thryft-hub-card thryft-ai-card">';
+		$html .= '<h3><a href="' . esc_url($url) . '">' . esc_html($row['title']) . '</a></h3>';
+		$html .= '<p>' . esc_html($row['summary']) . '</p>';
+		$html .= '<div class="btn-wrap"><div class="btn-sevices viewnode"><a href="' . esc_url($url) . '">Package details</a></div>';
+		$html .= '<div class="btn-sevices appointment"><a href="' . esc_url(add_query_arg('intent', 'ai', home_url('/contact-us/'))) . '">Talk to us</a></div></div>';
+		$html .= '</div></div>';
+	}
+	$html .= '</div>';
+	$html .= '<p class="thryft-ai-note">AI pages sell expertise and scope. Partner / affiliate buttons stay on cost-savings offer pages with disclosure — not here.</p>';
+	$html .= '</div>';
+	return $html;
+}
+
+function thryft_guides_hub_html() {
+	$posts = thryft_content()['posts'];
+	$html = '<div class="thryft-guides-hub">';
+	$html .= '<div class="thryft-hub-intro">';
+	$html .= '<h2>Guides</h2>';
+	$html .= '<p>Short reads on payments, shipping, tax recoveries, and where AI meets ops. A fuller resources index can follow later.</p>';
+	$html .= '</div><div class="row">';
+	foreach ($posts as $post) {
+		$url = home_url($post['path']);
+		$html .= '<div class="col-md-4 col-sm-6 col-xs-12">';
+		$html .= '<div class="thryft-hub-card">';
+		$html .= '<h3><a href="' . esc_url($url) . '">' . esc_html($post['title']) . '</a></h3>';
+		$html .= '<div class="btn-wrap"><div class="btn-sevices viewnode"><a href="' . esc_url($url) . '">Read More</a></div></div>';
+		$html .= '</div></div>';
+	}
+	$html .= '</div></div>';
 	return $html;
 }
 

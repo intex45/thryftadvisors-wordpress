@@ -148,3 +148,110 @@ body.admin-bar .navbar-default {
 	font-size: 15px;
 	margin-bottom: 12px;
 }
+
+/* Dual-pillar IA (Phase 2 slice) */
+.thryft-brand-hero {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 22px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #21cbba;
+	margin: 0 0 8px;
+}
+.thryft-dual-hero h1 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 42px;
+	line-height: 1.15;
+	margin: 0 0 14px;
+	color: #000;
+}
+.thryft-hero-support {
+	font-size: 18px;
+	line-height: 1.5;
+	max-width: 34em;
+	margin-bottom: 22px;
+}
+.thryft-hero-ctas .requestaquote,
+.thryft-hero-ctas .thryft-secondary-cta {
+	display: inline-block;
+	margin: 0 12px 10px 0;
+	vertical-align: middle;
+}
+.thryft-secondary-cta {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 600;
+	font-size: 15px;
+	color: #000;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+.thryft-secondary-cta:hover,
+.thryft-text-link:hover {
+	color: #21cbba;
+}
+.thryft-text-link {
+	display: inline-block;
+	margin-left: 14px;
+	font-weight: 600;
+	color: #222;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+.thryft-door-row {
+	margin-top: 10px;
+	margin-bottom: 28px;
+}
+.thryft-door {
+	padding: 8px 8px 24px 0;
+	min-height: 180px;
+}
+.thryft-door h2 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 28px;
+	margin: 0 0 12px;
+}
+.thryft-btn-secondary {
+	background: #fff !important;
+	color: #21cbba !important;
+	border: 2px solid #21cbba;
+}
+.thryft-btn-secondary:hover {
+	background: #21cbba !important;
+	color: #fff !important;
+}
+.hd-cta .hd-cta-ai {
+	display: inline-block;
+	margin-left: 12px;
+	font-family: 'Poppins', sans-serif;
+	font-weight: 600;
+	font-size: 13px;
+	color: #222;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+.hd-cta .hd-cta-ai:hover {
+	color: #21cbba;
+}
+.thryft-ai-note {
+	margin-top: 18px;
+	font-size: 14px;
+	color: #555;
+}
+.thryft-ai-card {
+	background: #f3fbfa;
+}
+@media (max-width: 767px) {
+	.thryft-dual-hero h1 {
+		font-size: 30px;
+	}
+	.thryft-brand-hero {
+		font-size: 16px;
+	}
+	.hd-cta .hd-cta-ai {
+		display: block;
+		margin: 6px 0 0;
+	}
+}

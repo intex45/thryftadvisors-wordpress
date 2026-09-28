@@ -148,7 +148,11 @@ function thryft_import_content() {
 	$home_id = thryft_upsert_page('Welcome to THRYFT ADVISORS', 'welcome-thryft-advisors', '', '/');
 	thryft_upsert_page('About', 'about', $about_body, '/about/');
 	thryft_upsert_page('Contact Us', 'contact-us', '', '/contact-us/');
-	thryft_upsert_page('Services', 'services', thryft_services_hub_html(), '/services/');
+	thryft_upsert_page('Save', 'save', thryft_save_hub_html(), '/save/');
+	// Keep a published /services/ page so old bookmarks resolve before the 301 to /save/.
+	thryft_upsert_page('Services', 'services', thryft_save_hub_html(), '/services/');
+	thryft_upsert_page('AI Workflows', 'ai', thryft_ai_hub_html(), '/ai/');
+	thryft_upsert_page('Guides', 'guides', thryft_guides_hub_html(), '/guides/');
 	thryft_upsert_page('FAQ', 'faq', thryft_faq_html(), '/faq/');
 	thryft_upsert_page('Expense Reduction', 'expense-reduction', '', '/expense-reduction/');
 	thryft_upsert_page('Specialized Savings', 'specialized-savings', '', '/specialized-savings/');
@@ -160,6 +164,17 @@ function thryft_import_content() {
 		update_option('wp_page_for_privacy_policy', $privacy_id);
 	}
 	thryft_upsert_page('How We Make Money', 'how-we-make-money', thryft_content()['how_we_make_money_body'], '/how-we-make-money/');
+
+	foreach (thryft_ai_packages() as $row) {
+		$id = thryft_upsert_page($row['title'], $row['slug'], $row['body'], $row['path']);
+		if ($id) {
+			update_post_meta($id, '_thryft_page_role', 'ai_package');
+			$seo = thryft_seo_for_path(untrailingslashit($row['path']));
+			if ($seo) {
+				thryft_set_siteseo_meta($id, $seo['title'], $seo['desc']);
+			}
+		}
+	}
 
 	foreach (thryft_services() as $row) {
 		$content = '<div class="field field-name-field-video-link">' . $row['video'] . '</div>';
@@ -228,6 +243,12 @@ function thryft_apply_legal_seo() {
 		'privacy-policy' => '/privacy-policy',
 		'terms-conditions' => '/terms-conditions',
 		'how-we-make-money' => '/how-we-make-money',
+		'save' => '/save',
+		'ai' => '/ai',
+		'guides' => '/guides',
+		'scan' => '/ai/scan',
+		'pilot' => '/ai/pilot',
+		'embedding' => '/ai/embedding',
 	) as $slug => $path) {
 		$page = thryft_find_page_by_slug($slug);
 		$seo = thryft_seo_for_path($path);
@@ -293,8 +314,44 @@ function thryft_import_affiliate_slice() {
 	update_option('thryft_affiliate_slice', (string) THRYFT_AFFILIATE_SLICE);
 }
 
+function thryft_import_dual_pillar_slice() {
+	if (!defined('THRYFT_DUAL_PILLAR_SLICE')) {
+		return;
+	}
+	if (get_option('thryft_dual_pillar_slice') === (string) THRYFT_DUAL_PILLAR_SLICE && !isset($_GET['thryft_reimport'])) {
+		return;
+	}
+
+	$about = thryft_content()['about_body'];
+	$about_img = '<div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img class="img-responsive" src="' . esc_url(thryft_uri('files/shutterstock_1689429739_new.jpg')) . '" alt="" /></div></div></div>';
+	$about_body = $about_img . '<div class="field field-name-body"><div class="field-items"><div class="field-item even">' . $about . '</div></div></div>';
+
+	thryft_upsert_page('About', 'about', $about_body, '/about/');
+	thryft_upsert_page('Save', 'save', thryft_save_hub_html(), '/save/');
+	thryft_upsert_page('Services', 'services', thryft_save_hub_html(), '/services/');
+	thryft_upsert_page('AI Workflows', 'ai', thryft_ai_hub_html(), '/ai/');
+	thryft_upsert_page('Guides', 'guides', thryft_guides_hub_html(), '/guides/');
+	thryft_upsert_page('FAQ', 'faq', thryft_faq_html(), '/faq/');
+
+	foreach (thryft_ai_packages() as $row) {
+		$id = thryft_upsert_page($row['title'], $row['slug'], $row['body'], $row['path']);
+		if ($id) {
+			update_post_meta($id, '_thryft_page_role', 'ai_package');
+			$seo = thryft_seo_for_path(untrailingslashit($row['path']));
+			if ($seo) {
+				thryft_set_siteseo_meta($id, $seo['title'], $seo['desc']);
+			}
+		}
+	}
+
+	thryft_apply_legal_seo();
+	update_option('thryft_dual_pillar_slice', (string) THRYFT_DUAL_PILLAR_SLICE);
+	flush_rewrite_rules(false);
+}
+
 add_action('after_switch_theme', 'thryft_import_content');
 add_action('after_switch_theme', 'thryft_import_affiliate_slice');
+add_action('after_switch_theme', 'thryft_import_dual_pillar_slice');
 
 add_action('init', static function () {
 	if (get_template() !== 'thryft') {
@@ -304,6 +361,7 @@ add_action('init', static function () {
 		thryft_import_content();
 	}
 	thryft_import_affiliate_slice();
+	thryft_import_dual_pillar_slice();
 }, 30);
 
 add_action('admin_init', static function () {
@@ -313,8 +371,10 @@ add_action('admin_init', static function () {
 	if (isset($_GET['thryft_reimport']) && check_admin_referer('thryft_reimport')) {
 		delete_option('thryft_content_version');
 		delete_option('thryft_affiliate_slice');
+		delete_option('thryft_dual_pillar_slice');
 		thryft_import_content();
 		thryft_import_affiliate_slice();
+		thryft_import_dual_pillar_slice();
 		wp_safe_redirect(admin_url('themes.php?thryft_imported=1'));
 		exit;
 	}

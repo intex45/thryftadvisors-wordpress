@@ -239,85 +239,84 @@ $content = array(
 		),
 	),
 	'about_body' => '<h2>We\'re Business Owners Too</h2>
-<p>This business was founded on the principals of helping and tutoring businesses on their operating costs. As fellow owners, we understand the many roles owners and managers play in their organizations. We also understand business costs seemlingly increase every quarter, putting the pressue on the company to generate more revenue. We want to stop this by empowering owners and operators on choices they have to not only save money, but to make more money without added responsibility.</p>
-<p>From property owners to the local florist, we can help any business with their needs!</p>',
+<p>Thryft Advisors helps US businesses cut what they spend — and use AI where it actually shrinks the work. We started by tutoring owners on operating costs. As fellow operators, we know costs climb while the day job does not get shorter.</p>
+<p><strong>Cost savings.</strong> We show where money leaks on recurring bills and one-time recoveries. When a partner is under contract, we may send you a disclosed referral (we may earn a commission). Complex files still go through an advisor. Read <a href="/how-we-make-money/">how we make money</a>.</p>
+<p><strong>AI workflows.</strong> Separately, we package advisory work — Opportunity Scan, Pilot Sprint, and Ops Embedding — to pick, pilot, and operationalize AI in real SMB ops: intake, support, admin, quoting, scheduling, and similar. No public package prices; talk to us to scope.</p>
+<p>From property owners to local service firms, start with the door that matches your job: <a href="/save/">ways to save</a> or <a href="/ai/">AI for your business</a>.</p>',
+	'ai_packages' => array(
+		array(
+			'title' => 'AI Opportunity Scan',
+			'slug' => 'scan',
+			'path' => '/ai/scan/',
+			'summary' => 'A short remote look at a handful of real workflows. You get a written map of where AI helps, where it does not, and what to try first.',
+			'body' => '<p>The Opportunity Scan is for owners and operators who know AI is on the table but do not want a vague “strategy deck.” We look at a small set of live workflows — intake, support queues, admin follow-ups, quoting, scheduling, reporting, or similar — and write down where AI is likely to return hours versus where process or data must come first.</p>
+<p>This is advisory work framed for SMB operations, not a software build and not a chatbot demo. Scope and timing are set on a consult. <strong>We do not publish package prices</strong>; use the contact form with AI intent and we will follow up.</p>
+<p><a href="/contact-us/?intent=ai">Book an AI consult</a> · <a href="/ai/">Back to AI hub</a></p>',
+		),
+		array(
+			'title' => 'Pilot Sprint',
+			'slug' => 'pilot',
+			'path' => '/ai/pilot/',
+			'summary' => 'A time-boxed implementation of one workflow — for example lead intake summaries, support macros with a human handoff, or admin document triage.',
+			'body' => '<p>The Pilot Sprint takes one agreed workflow from “interesting” to “in use.” Typical examples: lead intake to CRM notes, quote drafting with guardrails, support macros plus human escalation, AP or invoice triage, or scheduling follow-ups. We favor tools your team can keep running — prompts, SOPs, light no/low-code automation — over open-ended custom builds.</p>
+<p>Out of scope by default: custom model training, full product engineering, and regulated advice delivered by AI. Scope is confirmed on a consult. <strong>No public pricing</strong>.</p>
+<p><a href="/contact-us/?intent=ai">Book an AI consult</a> · <a href="/ai/">Back to AI hub</a></p>',
+		),
+		array(
+			'title' => 'Ops Embedding',
+			'slug' => 'embedding',
+			'path' => '/ai/embedding/',
+			'summary' => 'Ongoing advisory so AI stays in the operating rhythm — playbooks, SOP updates, light automation, and tool selection as the work changes.',
+			'body' => '<p>Ops Embedding is for teams that already piloted something and need the habits to stick: prompt libraries, SOP updates, light automation, staff enablement, and vendor selection when tools change. The goal is hours returned and fewer rework loops — not generative-AI theater.</p>
+<p>If a recommended tool also happens to pay an affiliate commission, that is disclosed separately from the consulting SOW. <strong>Package pricing is not listed publicly</strong>; talk to us.</p>
+<p><a href="/contact-us/?intent=ai">Talk to us about embedding</a> · <a href="/ai/">Back to AI hub</a></p>',
+		),
+	),
 	'faq' => array(
 		array(
-			'section' => 'Process',
-			'question' => 'Is there a fee for your assessment...?',
-			'answer' => '<p>There is no fee for our initial assessment.</p>',
+			'section' => 'Cost savings',
+			'question' => 'How do you help with cost savings?',
+			'answer' => '<p>We group work into recurring bills (card acceptance, shipping, phones, waste, energy, and similar) and one-time recoveries (tax studies, settlements, and related projects). Recurring areas may use a disclosed partner when one is under contract; messy or non-affiliate files stay with an advisor. Start at <a href="/save/">ways to save</a>.</p>',
+		),
+		array(
+			'section' => 'Cost savings',
+			'question' => 'Is there a fee for the initial savings conversation?',
+			'answer' => '<p>There is no fee for the initial assessment conversation. How we are paid afterward depends on the path: disclosed partner commissions on some offer pages, or advisor engagements for complex recoveries. Details live on <a href="/how-we-make-money/">how we make money</a>.</p>',
+		),
+		array(
+			'section' => 'Cost savings',
+			'question' => 'Do we have to change our current vendors?',
+			'answer' => '<p>Not necessarily. If your processor, carrier, or other provider is fine, stay. Use us to check for waste, overcharges, or a better disclosed alternative when one exists.</p>',
+		),
+		array(
+			'section' => 'Cost savings',
+			'question' => 'How are you compensated on savings work?',
+			'answer' => '<p>On partner offer pages we may earn a commission if you use a contracted partner — that is advertising, at no extra cost to you. Advisor work on recoveries may use a share of savings or a scoped fee; we will say which before you commit. We do not invent performance counters on the site.</p>',
+		),
+		array(
+			'section' => 'AI workflows',
+			'question' => 'What AI packages do you offer?',
+			'answer' => '<p>Three packages: <a href="/ai/scan/">Opportunity Scan</a>, <a href="/ai/pilot/">Pilot Sprint</a>, and <a href="/ai/embedding/">Ops Embedding</a>. They are framed around SMB workflows (ops, intake, support, admin, quoting, scheduling) — not narrow model training. Pricing is not published; book a consult.</p>',
+		),
+		array(
+			'section' => 'AI workflows',
+			'question' => 'Is AI the same as your affiliate offers?',
+			'answer' => '<p>No. AI packages are consulting. Affiliate / partner buttons appear on cost-savings offer pages with disclosure. We do not mix partner click-outs into AI package pages.</p>',
+		),
+		array(
+			'section' => 'AI workflows',
+			'question' => 'What is out of scope for AI work?',
+			'answer' => '<p>By default: custom model training, full software product builds, and regulated advice (legal, tax, medical) delivered by AI. We focus on process mapping, tool selection, prompts/SOPs, light automation, and enablement.</p>',
 		),
 		array(
 			'section' => 'Process',
-			'question' => 'How long does it take to run a business assessment…?',
-			'answer' => '<p>Our initial meeting is typically no more than 15 minutes. During this session, we will gather basic information about your company to determine which tax incentive, business expense reduction programs you may qualify for as well as potential revenue gain opportunities. This can be done onsite, over the phone or via web conference…whichever best accommodates your schedule.</p>',
+			'question' => 'How do I get started?',
+			'answer' => '<p>Use the <a href="/contact-us/">contact form</a> and pick Cost savings, AI workflows, or Not sure. Or call 888-316-6968. Initial conversations are typically about 15 minutes.</p>',
 		),
 		array(
 			'section' => 'Process',
-			'question' => 'What information do I need to provide…?',
-			'answer' => '<p>After the initial interview we will follow-up to get additional detail based on the service benefit opportunity. As an example, to determine how much revenue you could generate from paying your vendors virtually, we would just need a summary of your accounts payable spend sorted by supplier. In 3-5 business days we’ll get back to you with an estimate of the rebates you could earn.</p>',
-		),
-		array(
-			'section' => 'Process',
-			'question' => 'Do we have to change our business service providers…?',
-			'answer' => '<p>Not at all. If you are satisfied with the current level of service of your credit card merchant processor, cell phone or business insurance or other service providers, continue with them. Use us to make sure you are not inadvertently being overcharged for any fees that don’t apply to your business.</p>',
-		),
-		array(
-			'section' => 'Process',
-			'question' => 'What happens if we change a service provider…?',
-			'answer' => '<p>Our expert team will continue to act on your behalf to make sure your new business service provider is billing you only for fees or line items that apply to your business. We provide peace of mind, month in and month out, so that you can focus on running your business.</p>',
-		),
-		array(
-			'section' => 'Services',
-			'question' => 'What types of services does your company offer…?',
-			'answer' => '<p>We focus on delivering expense reductions, specialized savings and tax incentives that you can apply to your business bottom line. Our team of business process consultants, engineers, intellectual property attorneys and expense auditors work together seamlessly to maximize your benefit.</p>',
-		),
-		array(
-			'section' => 'Services',
-			'question' => 'What expense reduction services do you provide…?',
-			'answer' => '<p>Our team runs a multi-point expense analysis to identify overcharges and billing errors in key business expense areas such as credit card processing, document management, parcel shipping, waste &amp; recycling, wireless and worker’s compensation premiums.</p>',
-		),
-		array(
-			'section' => 'Services',
-			'question' => 'What specialized savings services do you provide…?',
-			'answer' => '<p>We can help you transform your Accounts Payable department into an additional revenue channel as well as track open class action settlement cases and notify you when we believe you may be eligible to participate in these settlements. Additionally, we can help you lower energy and healthcare cost as well as give hourly employees instant access to their earned wages.</p>',
-		),
-		array(
-			'section' => 'Services',
-			'question' => 'What tax incentive services do you provide…?',
-			'answer' => '<p>Our team of tax specialists use proprietary software to identify local, state, and federal tax incentives available for your company. On average, for a small to mid-size company, we are able to identify over $200,000 in tax-based incentives.</p>',
-		),
-		array(
-			'section' => 'Services',
-			'question' => 'Are these services my CPA or CFO could handle…?',
-			'answer' => '<p>Business expense reductions, revenue gain opportunities and tax incentives, we identify and recover on your behalf, require highly specialized expertise to maximize your benefit capture and to ensure any overcharges found are permanently removed. </p>
-<p>As an example, twice a year, Visa and MasterCard update their fee structures which are referenced in documents that are several hundred pages. This is not an area that CPAs or CFOs are trained to work through.</p>
-<p>Similarly, specialized tax incentives such as the R&amp;D tax credit are extremely technical and backed by myriads of case law. CPAs do not have the time nor the knowledge to investigate, determine, procure and defend specialized tax incentives such as those in the Section 41 ("Research") Credit.</p>',
-		),
-		array(
-			'section' => 'Services',
-			'question' => 'How are you compensated for providing these services…?',
-			'answer' => '<p>We are compensated based on a share of the savings identified. There is no charge for our assessment of your business expense reduction savings and tax incentive recapture opportunity. In effect we offer a free business diagnostic. If we don’t find any savings for your business you owe us nothing.</p>',
-		),
-		array(
-			'section' => 'Results',
-			'question' => 'Will my business qualify for a savings benefit…?',
-			'answer' => '<p>In our experience 9 out of 10 companies can benefit from one or more of our services. Your savings level will depend on what our team determines when they evaluate selected areas of your business.</p>',
-		),
-		array(
-			'section' => 'Results',
-			'question' => 'Are savings ongoing or a one-time benefit…?',
-			'answer' => '<p>This depends on the service type.  Services that are recurring will continue to deliver savings as long as you are using those services.</p>',
-		),
-		array(
-			'section' => 'Results',
-			'question' => 'When are recurring savings paid out…?',
-			'answer' => '<p>Savings from recurring programs will be delivered on an ongoing basis, typically beginning within 3 weeks of our analysis of your business data and verification of benefit level.</p>',
-		),
-		array(
-			'section' => 'Results',
-			'question' => 'When are project savings paid out…?',
-			'answer' => '<p>Project savings are typically paid out within 30 days of confirmation of your total savings benefit and recovery from the underlying service provider or taxing authority..</p>',
+			'question' => 'Are savings ongoing or one-time?',
+			'answer' => '<p>Recurring bill work can keep delivering while you use that service. Tax and settlement recoveries are typically project-based. AI pilots return hours if the workflow stays in use; embedding keeps that habit alive.</p>',
 		),
 	),
 );

@@ -46,6 +46,26 @@ Ships in the theme (no Pretty Links plugin). After uploading the new theme zip o
 
 Do **not** merge this slice to `main` unless you are also merging the live `thryft` theme (open PR #3). `main` may still be the abandoned PopularFX overlay.
 
+## Dual-pillar IA (Phase 2 first slice)
+
+Branches from the Phase 1 tip (`cursor/affiliate-phase1-b8c3` / PR #4). Content + IA on `thryft` — not a new theme.
+
+| Surface | What shipped |
+|---|---|
+| Homepage | Save primary, AI secondary dual-door |
+| Nav | Save / AI / Guides / About / Contact |
+| `/save/` | Cost-savings hub (recurring vs one-time); nested `/services/...` URLs unchanged |
+| `/services/` | 301 → `/save/` |
+| `/ai/` + `/ai/scan/` `/ai/pilot/` `/ai/embedding/` | AI hub + package stubs (no public prices) |
+| `/guides/` | Light index of existing posts |
+| Contact form | Intent picker: `savings` \| `ai` \| `unsure` (also `?intent=`) |
+| About / FAQ | Light dual-pillar pass |
+| Phase 1 plumbing | Disclosure, `/how-we-make-money/`, `/go/`, consent-gated Pixel — preserved |
+
+After upload: Appearance → **Re-import content** (bumps `THRYFT_CONTENT_VERSION` to 5 + `thryft_dual_pillar_slice`). Flush permalinks.
+
+**MochaHost deploy is not in this slice.** Prag wants one push after changes are agreed. Blocked until cPanel / FTP / SSH credentials exist and Prag approves. Do not invent GA4 IDs or partner `/go/` destinations.
+
 ### Staging / local activate (WP Admin)
 
 From the repo root: `bash tools/package-for-staging.sh` (writes `dist/thryft-theme.zip` and `dist/thryft-redirects.zip`).
