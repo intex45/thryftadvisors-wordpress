@@ -15,29 +15,29 @@
 					<h2 class="block-title">Main Links</h2>
 					<ul class="menu nav">
 						<li class="first leaf"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a></li>
+						<li class="leaf"><a href="<?php echo esc_url(home_url('/save/')); ?>">Save</a></li>
+						<li class="leaf"><a href="<?php echo esc_url(home_url('/ai/')); ?>">AI workflows</a></li>
+						<li class="leaf"><a href="<?php echo esc_url(home_url('/guides/')); ?>">Guides</a></li>
 						<li class="leaf"><a href="<?php echo esc_url(home_url('/about/')); ?>">About</a></li>
-						<li class="leaf"><a href="<?php echo esc_url(home_url('/contact-us/')); ?>">Contact Us</a></li>
-						<li class="expanded dropdown">
-							<a href="<?php echo esc_url(home_url('/services/')); ?>" class="dropdown-toggle" data-toggle="dropdown">Services <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li class="first leaf"><a href="<?php echo esc_url(home_url('/expense-reduction/')); ?>">Expense Reduction</a></li>
-								<li class="leaf"><a href="<?php echo esc_url(home_url('/specialized-savings/')); ?>">Specialized Savings</a></li>
-								<li class="last leaf"><a href="<?php echo esc_url(home_url('/tax-incentives/')); ?>">Tax Incentives</a></li>
-							</ul>
-						</li>
-						<li class="last leaf"><a href="<?php echo esc_url(home_url('/faq/')); ?>">FAQ</a></li>
+						<li class="leaf"><a href="<?php echo esc_url(home_url('/contact-us/')); ?>">Contact</a></li>
+						<li class="last leaf"><a href="<?php echo esc_url(home_url('/how-we-make-money/')); ?>">How we make money</a></li>
 					</ul>
 				</section>
 				<section id="block-menu-menu-expense-reduction" class="block block-menu clearfix">
-					<h2 class="block-title">Expense Reduction</h2>
+					<h2 class="block-title">Recurring bills</h2>
 					<ul class="menu nav"><?php thryft_footer_service_links('expense-reduction'); ?></ul>
 				</section>
 				<section id="block-menu-menu-specialized-savings" class="block block-menu clearfix">
-					<h2 class="block-title">Specialized Savings</h2>
-					<ul class="menu nav"><?php thryft_footer_service_links('specialized-savings'); ?></ul>
+					<h2 class="block-title">Specialized &amp; AI</h2>
+					<ul class="menu nav">
+						<?php thryft_footer_service_links('specialized-savings'); ?>
+						<li class="leaf"><a href="<?php echo esc_url(home_url('/ai/scan/')); ?>">AI Opportunity Scan</a></li>
+						<li class="leaf"><a href="<?php echo esc_url(home_url('/ai/pilot/')); ?>">AI Pilot Sprint</a></li>
+						<li class="leaf"><a href="<?php echo esc_url(home_url('/ai/embedding/')); ?>">Ops Embedding</a></li>
+					</ul>
 				</section>
 				<section id="block-menu-menu-tax-incentives" class="block block-menu clearfix">
-					<h2 class="block-title">Tax Incentives</h2>
+					<h2 class="block-title">One-time recoveries</h2>
 					<ul class="menu nav"><?php thryft_footer_service_links('tax-incentives'); ?></ul>
 				</section>
 			</div>

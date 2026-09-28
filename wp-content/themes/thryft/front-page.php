@@ -1,29 +1,27 @@
 <?php
 /**
- * Homepage — Drupal welcome node + blocks.
+ * Homepage — dual-door: Save primary, AI secondary.
  */
 get_header();
 
 $files = thryft_uri('files');
 $posts = thryft_content()['posts'];
-$steps = array(
-	array('Schedule', 'Our initial meeting is typically no more than 15 minutes to gather basic information about your company to determine which expense reduction solutions can best suite your needs.'),
-	array('Identify', 'Our proprietary system enables us to identify which solutions will deliver the best savings opportunity for your business and walk through the savings range potential as no obligation to you.'),
-	array('Verify', 'Our team of business process experts, intellectual property, attorneys, engineers, finance and tax specialists do a comprehensive assessment of your business data for expense reduction, tax incentive and specialized savings programs identified in the evaluations phase. They will then create all the supporting documents necessary to implements each benefit opportunity.'),
-	array('Implement', 'Once your tax incentive, business expense reduction and specialized savings opportunities are confirmed, our team of implementation experts will work directly with your service providers and tax agencies to secure your project.'),
-	array('Relax!', 'Our team will continue to serve as an audit monitor ensuring that you no longer are assessed fees or charges that don’t apply to your business.'),
-);
+$contact_save = add_query_arg('intent', 'savings', home_url('/contact-us/'));
+$contact_ai = add_query_arg('intent', 'ai', home_url('/contact-us/'));
 ?>
-<div class="highlighted"><div class="container">
+<div class="highlighted thryft-dual-hero"><div class="container">
 	<div class="region region-highlighted">
 		<section id="block-block-1" class="block block-block clearfix">
 			<div class="row">
 				<div class="col-md-7 col-sm-12 col-xs-12">
-					<h2>Reduce Your</h2>
-					<h2>Business Costs</h2>
-					<p>We review your operating costs and help you save money. It's that simple.</p>
-					<div class="whatwedodesc">
-						<p><a class="requestaquote bluebtn" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Request a Consultation</a></p>
+					<p class="thryft-brand-hero">Thryft Advisors</p>
+					<h1>Cut what you spend. Shrink the work that wastes time.</h1>
+					<p class="thryft-hero-support">We help US businesses lower recurring bills and recover cash on projects that should pay you back — and use AI where it actually shrinks the work.</p>
+					<div class="whatwedodesc thryft-hero-ctas">
+						<p>
+							<a class="requestaquote bluebtn" href="<?php echo esc_url(home_url('/save/')); ?>">See ways to save</a>
+							<a class="thryft-secondary-cta" href="<?php echo esc_url(home_url('/ai/')); ?>">AI for your business</a>
+						</p>
 					</div>
 				</div>
 				<div class="banner-design col-md-5 col-sm-12 col-xs-12">
@@ -40,29 +38,24 @@ $steps = array(
 			<section class="col-sm-12">
 				<a id="main-content"></a>
 				<div class="region region-content">
-					<section id="block-block-3" class="block block-block clearfix">
-						<h2>Why Choose Us?</h2>
-						<p>6 reasons to choose Thryft Advisors</p>
-						<div class="row">
-							<?php
-							$reasons = array(
-								array('icon-1.png', 'Comprehensive Review', 'We will review and audit your entire business operations to ensure all potential cost recovery solutions can be identified and quantified.'),
-								array('icon-2.png', 'Team of Experts', 'Our team of Consultants, Engineers, IP Attorneys, and Expense Auditors will review your Company Operations in all industries.'),
-								array('icon-3.png', 'Strategic Solutions', 'Our team runs a multi-point expense analysis to indentify overcharges and billing errors in your key business expense areas.'),
-								array('icon-1.png', 'No Cost Consultation', 'There are no fees for our evaluations. Compensation is based only on the amount of savings and recovery identified.'),
-								array('icon-2.png', 'Flexible Scheduling', 'We cater your cost recovery solutions to your timeframe and schedule.'),
-								array('icon-3.png', 'Recurring Support', 'We are commited to delivering lifelong support to our clients, including recurring programs that will continue to reduce cost for the life of your business.'),
-							);
-							foreach ($reasons as $reason) :
-							?>
-							<div class="col-md-4 col-sm-6 col-xs-12">
-								<div class="why-choose-box">
-									<p><img alt="" src="<?php echo esc_url($files . '/' . $reason[0]); ?>" /></p>
-									<h4><?php echo esc_html($reason[1]); ?></h4>
-									<p><?php echo esc_html($reason[2]); ?></p>
+					<section id="block-thryft-dual-doors" class="block block-thryft clearfix">
+						<div class="row thryft-door-row">
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<div class="thryft-door thryft-door-save">
+									<h2>Save on costs</h2>
+									<p>Recurring bills (processing, shipping, phones, waste, energy) and one-time recoveries (tax studies, settlements). Disclosed partners when a fit exists; advisors for messy files.</p>
+									<p><a class="requestaquote bluebtn" href="<?php echo esc_url(home_url('/save/')); ?>">Explore savings</a>
+									<a class="thryft-text-link" href="<?php echo esc_url($contact_save); ?>">Talk to an advisor</a></p>
 								</div>
 							</div>
-							<?php endforeach; ?>
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<div class="thryft-door thryft-door-ai">
+									<h2>AI for workflows</h2>
+									<p>Packaged help to pick, pilot, and operationalize AI in real SMB work — intake, support, admin, ops — not a chatbot landing page.</p>
+									<p><a class="requestaquote bluebtn thryft-btn-secondary" href="<?php echo esc_url(home_url('/ai/')); ?>">See AI packages</a>
+									<a class="thryft-text-link" href="<?php echo esc_url($contact_ai); ?>">Book an AI consult</a></p>
+								</div>
+							</div>
 						</div>
 					</section>
 					<section id="block-imageblock-1" class="block block-imageblock clearfix">
@@ -70,9 +63,9 @@ $steps = array(
 							<img class="imageblock-image img-responsive" src="<?php echo esc_url($files . '/imageblock/AdobeStock_300167426.jpg'); ?>" alt="" />
 						</div>
 						<div class="block-body">
-							<h2>Your Business Cannot Afford To Stand Still</h2>
-							<p>We help businesses spend less on the bills that never stop — and recover cash on the projects that should pay you back. Recurring costs can go to a disclosed partner when one is a fit; complex files still go through an advisor.</p>
-							<p><a class="requestaquote bluebtn" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Request a quote</a></p>
+							<h2>How we get paid stays clear</h2>
+							<p>On cost-savings pages we may earn a commission when you use a disclosed partner — that is advertising, at no extra cost to you. AI packages are advisory work billed separately. Read <a href="<?php echo esc_url(home_url('/how-we-make-money/')); ?>">how we make money</a>.</p>
+							<p><a class="requestaquote bluebtn" href="<?php echo esc_url(home_url('/save/')); ?>">See ways to save</a></p>
 						</div>
 					</section>
 				</div>
@@ -88,8 +81,8 @@ $steps = array(
 				<img class="imageblock-image img-responsive" src="<?php echo esc_url($files . '/imageblock/iphone.png'); ?>" alt="" />
 			</div>
 			<div class="block-body">
-				<h2>Our Results</h2>
-				<p>We help US businesses find waste in recurring bills and recover cash on the projects that should pay you back. Talk to an advisor for complex files, or use the disclosed partner path on card-acceptance and shipping pages.</p>
+				<h2>Two doors. One desk.</h2>
+				<p>Start with the bill you want lower, or the workflow that eats hours. Phone and form stay for complex files — tell us whether you came for savings, AI, or both.</p>
 			</div>
 		</section>
 	</div>
@@ -102,8 +95,16 @@ $steps = array(
 			<div class="view view-how-it-works">
 				<div class="view-content">
 					<div class="row">
-						<?php foreach ($steps as $i => $step) : ?>
-						<div class="col-md-15 col-sm-6 col-xs-12 slide views-row">
+						<?php
+						$steps = array(
+							array('Tell us the job', 'Pick Save or AI — or say you are unsure. A short call gathers enough to point you at the right path.'),
+							array('Map the waste', 'For bills: where money leaks. For AI: which workflows burn time. No unsubstantiated scoreboard.'),
+							array('Partner or package', 'Disclosed apply links when a partner fits. Advisor help for recoveries. Scan / Pilot / Embedding for AI — talk to us for scope.'),
+							array('Follow through', 'We stay available for the messy follow-ups — statements, SOPs, handoffs — so the change sticks.'),
+						);
+						foreach ($steps as $i => $step) :
+						?>
+						<div class="col-md-3 col-sm-6 col-xs-12 slide views-row">
 							<div class="views-field views-field-counter"><span class="field-content"><?php echo (int) ($i + 1); ?></span></div>
 							<div class="views-field views-field-nothing">
 								<div class="field-content howitworksbox">
@@ -125,8 +126,8 @@ $steps = array(
 		<section id="block-views-latest-blog-block" class="block block-views clearfix">
 			<div class="view view-latest-blog">
 				<div class="view-header">
-					<h2>We have <span>stories </span>for you</h2>
-					<p>Find the latest news</p>
+					<h2>Guides <span>worth reading</span></h2>
+					<p><a href="<?php echo esc_url(home_url('/guides/')); ?>">Browse all guides</a></p>
 				</div>
 				<div class="view-content">
 					<?php foreach ($posts as $i => $post) :

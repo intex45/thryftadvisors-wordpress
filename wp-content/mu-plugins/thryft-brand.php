@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Thryft Advisors redirects
  * Description: Drupal URL 301s, CookieAdmin powered-by hide, workers-comp slug normalization, and /go/ cloaking fallback.
- * Version: 2.1.0
+ * Version: 2.2.0
  */
 
 if (!defined('ABSPATH')) {
@@ -40,13 +40,14 @@ add_action('template_redirect', static function () {
 		'/news' => '/',
 		'/blog' => '/',
 		'/privacy-policy-2' => '/privacy-policy/',
+		'/services' => '/save/',
 		'/services/expense-reduction' => '/expense-reduction/',
 		'/services/specialized-savings' => '/specialized-savings/',
 		'/services/tax-incentives' => '/tax-incentives/',
 		'/node/5' => '/',
 		'/node/1' => '/about/',
 		'/node/2' => '/contact-us/',
-		'/node/3' => '/services/',
+		'/node/3' => '/save/',
 		'/node/4' => '/faq/',
 		'/node/44' => '/terms-conditions/',
 		'/node/45' => '/privacy-policy/',

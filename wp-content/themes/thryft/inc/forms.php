@@ -1,6 +1,6 @@
 <?php
 /**
- * Contact / Get In Touch form (Drupal webform nid 73 fields).
+ * Contact / Get In Touch form (Drupal webform nid 73 fields) + dual-pillar intent.
  */
 
 if (!defined('ABSPATH')) {
@@ -9,6 +9,33 @@ if (!defined('ABSPATH')) {
 
 function thryft_form_recipient() {
 	return 'admin@thryftadvisors.com';
+}
+
+function thryft_intent_labels() {
+	return array(
+		'savings' => 'Cost savings',
+		'ai' => 'AI workflows',
+		'unsure' => 'Not sure',
+	);
+}
+
+function thryft_normalize_intent($raw) {
+	$intent = sanitize_key((string) $raw);
+	$allowed = array_keys(thryft_intent_labels());
+	if (!in_array($intent, $allowed, true)) {
+		return 'unsure';
+	}
+	return $intent;
+}
+
+function thryft_request_intent() {
+	if (!empty($_POST['submitted']['intent'])) {
+		return thryft_normalize_intent(wp_unslash($_POST['submitted']['intent']));
+	}
+	if (!empty($_GET['intent'])) {
+		return thryft_normalize_intent(wp_unslash($_GET['intent']));
+	}
+	return 'unsure';
 }
 
 function thryft_handle_contact_form() {
@@ -29,6 +56,8 @@ function thryft_handle_contact_form() {
 	$email = isset($_POST['submitted']['email']) ? sanitize_email(wp_unslash($_POST['submitted']['email'])) : '';
 	$phone = isset($_POST['submitted']['phone']) ? sanitize_text_field(wp_unslash($_POST['submitted']['phone'])) : '';
 	$message = isset($_POST['submitted']['message']) ? sanitize_textarea_field(wp_unslash($_POST['submitted']['message'])) : '';
+	$intent = thryft_request_intent();
+	$intent_label = thryft_intent_labels()[$intent];
 
 	if ($name === '' || $email === '' || $message === '' || !is_email($email)) {
 		wp_safe_redirect(add_query_arg('contact', 'error', wp_get_referer() ?: home_url('/contact-us/')));
@@ -36,8 +65,8 @@ function thryft_handle_contact_form() {
 	}
 
 	$to = thryft_form_recipient();
-	$subject = 'Thryft Advisors quote request from ' . $name;
-	$body = "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\n\nMessage:\n{$message}\n";
+	$subject = 'Thryft Advisors [' . $intent_label . '] from ' . $name;
+	$body = "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nIntent: {$intent} ({$intent_label})\n\nMessage:\n{$message}\n";
 	$headers = array(
 		'Content-Type: text/plain; charset=UTF-8',
 		'Reply-To: ' . $name . ' <' . $email . '>',
@@ -58,6 +87,12 @@ function thryft_form_feedback() {
 	if (!empty($_GET['from']) && strpos(sanitize_text_field(wp_unslash($_GET['from'])), 'go-') === 0) {
 		echo '<div class="thryft-form-note">Tell us about the cost area you want help with. An advisor will follow up and can introduce a partner when one is a fit. Partner referrals may be compensated — that is advertising.</div>';
 	}
+	$intent = thryft_request_intent();
+	if ($intent === 'ai' && empty($_GET['contact'])) {
+		echo '<div class="thryft-form-note">You are contacting us about <strong>AI workflows</strong>. We will follow up about Scan, Pilot, or Embedding — no public package prices; we scope on a call.</div>';
+	} elseif ($intent === 'savings' && empty($_GET['contact'])) {
+		echo '<div class="thryft-form-note">You are contacting us about <strong>cost savings</strong>. An advisor will follow up; partner referrals on offer pages may be compensated when a program is under contract.</div>';
+	}
 	if (empty($_GET['contact'])) {
 		return;
 	}
@@ -71,6 +106,8 @@ function thryft_form_feedback() {
 }
 
 function thryft_render_form($heading = 'Get In Touch') {
+	$intent = thryft_request_intent();
+	$labels = thryft_intent_labels();
 	?>
 	<section id="block-webform-client-block-73" class="block block-webform clearfix">
 		<h2 class="block-title"><?php echo esc_html($heading); ?></h2>
@@ -91,6 +128,14 @@ function thryft_render_form($heading = 'Get In Touch') {
 				<div class="form-item webform-component webform-component-textfield webform-component--phone form-group">
 					<label class="control-label" for="edit-submitted-phone">Phone</label>
 					<input class="form-control form-text" type="text" id="edit-submitted-phone" name="submitted[phone]" value="" size="60" maxlength="128" />
+				</div>
+				<div class="form-item webform-component webform-component-select webform-component--intent form-group">
+					<label class="control-label" for="edit-submitted-intent">What can we help with? <span class="form-required" title="This field is required.">*</span></label>
+					<select required="required" class="form-control form-select required" id="edit-submitted-intent" name="submitted[intent]">
+						<?php foreach ($labels as $value => $label) : ?>
+						<option value="<?php echo esc_attr($value); ?>"<?php selected($intent, $value); ?>><?php echo esc_html($label); ?></option>
+						<?php endforeach; ?>
+					</select>
 				</div>
 				<div class="form-item webform-component webform-component-textarea webform-component--message form-group">
 					<label class="control-label" for="edit-submitted-message">Message <span class="form-required" title="This field is required.">*</span></label>

@@ -66,7 +66,7 @@ function thryft_offer_cta_html($go_slug) {
 	$html .= thryft_disclosure_paragraph();
 	$html .= '<div class="btn-wrap">';
 	$html .= '<div class="btn-sevices"><a class="thryft-offer-link" data-offer="' . esc_attr($go_slug) . '" rel="sponsored nofollow" href="' . esc_url(thryft_go_url($go_slug)) . '">See partner options</a></div>';
-	$html .= '<div class="btn-sevices appointment"><a href="' . esc_url(home_url('/contact-us/')) . '">Talk to an advisor</a></div>';
+	$html .= '<div class="btn-sevices appointment"><a href="' . esc_url(add_query_arg('intent', 'savings', home_url('/contact-us/'))) . '">Talk to an advisor</a></div>';
 	$html .= '</div>';
 	$html .= '<p>Prefer the phone? Call <a href="tel:888-316-6968" data-thryft-event="click_to_call">888-316-6968</a>. Until a partner URL is assigned, “See partner options” reaches an advisor — we will not send you to a fake paid program.</p>';
 	$html .= '</div>';
@@ -98,6 +98,30 @@ function thryft_seo_for_path($path) {
 		'/how-we-make-money' => array(
 			'title' => 'How We Make Money | Thryft Advisors',
 			'desc' => 'Thryft Advisors is a hybrid advisor and disclosed affiliate. How partner commissions and advisor engagements work.',
+		),
+		'/save' => array(
+			'title' => 'Ways to Save | Thryft Advisors',
+			'desc' => 'Recurring bills and one-time recoveries for US businesses. Disclosed partners when under contract; advisors for complex files.',
+		),
+		'/ai' => array(
+			'title' => 'AI Workflow Consulting | Thryft Advisors',
+			'desc' => 'Scan, Pilot, and Embedding packages for SMB ops, intake, support, and admin. No public prices — book a consult.',
+		),
+		'/ai/scan' => array(
+			'title' => 'AI Opportunity Scan | Thryft Advisors',
+			'desc' => 'Map where AI helps vs does not across real SMB workflows. Talk to us to scope — no public package prices.',
+		),
+		'/ai/pilot' => array(
+			'title' => 'AI Pilot Sprint | Thryft Advisors',
+			'desc' => 'Time-boxed AI implementation for one workflow. Book a consult — pricing is not listed publicly.',
+		),
+		'/ai/embedding' => array(
+			'title' => 'AI Ops Embedding | Thryft Advisors',
+			'desc' => 'Ongoing AI advisory for playbooks, SOPs, and light automation. Talk to us — no public prices.',
+		),
+		'/guides' => array(
+			'title' => 'Guides | Thryft Advisors',
+			'desc' => 'Guides on payments, shipping, tax recoveries, and AI for SMB operations from Thryft Advisors.',
 		),
 	);
 	$key = untrailingslashit($path);
@@ -163,6 +187,7 @@ function thryft_handle_go_slug($slug) {
 		add_query_arg(
 			array(
 				'from' => 'go-' . $slug,
+				'intent' => 'savings',
 			),
 			home_url('/contact-us/')
 		),
